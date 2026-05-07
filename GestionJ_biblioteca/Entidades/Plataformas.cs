@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class Plataformas
+    public class Plataformas : Auditorias
     {
         [Key] public int Id { get; set; }
         public string? NombrePlataforma { get; set; }

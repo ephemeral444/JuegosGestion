@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class Roms
+    public class Roms : Auditorias
     {
         [Key] public int Id { get; set; }
         public string? Nombre { get; set; }

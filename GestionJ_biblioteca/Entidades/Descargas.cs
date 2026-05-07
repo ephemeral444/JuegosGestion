@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class Descargas
+    public class Descargas : Auditorias
     {
         [Key] public int Id { get; set; }
         public string? Servidor { get; set; }

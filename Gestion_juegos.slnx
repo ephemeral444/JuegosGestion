@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="GestionesJ_Api/GestionesJ_Api.csproj" Id="d662a8b8-6144-4f23-a200-5b3b07bb678c" />
+  <Project Path="GestionesJ_Unitarias/GestionesJ_Unitarias.csproj" Id="af061c61-657c-4a2b-9a3b-b1c8e42ebdd3" />
   <Project Path="GestionJ_biblioteca/GestionJ_biblioteca.csproj" />
 </Solution>

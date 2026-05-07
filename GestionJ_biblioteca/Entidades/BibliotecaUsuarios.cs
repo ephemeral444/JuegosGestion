@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class BibliotecaUsuarios
+    public class BibliotecaUsuarios : Auditorias
     {
         [Key] public int Id { get; set; }
         public DateOnly FechaRegistro { get; set; }

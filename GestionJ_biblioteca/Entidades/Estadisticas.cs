@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class Estadisticas
+    public class Estadisticas : Auditorias
     {
         [Key] public int Id { get; set; }
         public DateOnly TiempoJuego { get; set; }

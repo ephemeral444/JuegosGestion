@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class Notificaciones
+    public class Notificaciones : Auditorias
     {
         [Key] public int Id { get; set; }
         public string? Titulo { get; set; }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class ConfiGraficas
+    public class ConfiGraficas : Auditorias
     {
         [Key] public int Id { get; set; }
         public string? Resolucion { get; set; }

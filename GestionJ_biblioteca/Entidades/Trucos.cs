@@ -6,7 +6,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class Trucos
+    public class Trucos : Auditorias
     {
         [Key] public int Id { get; set; }
         public int CodigoTruco { get; set; }

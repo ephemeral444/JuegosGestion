@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class Logros
+    public class Logros : Auditorias
     {
         [Key] public int Id { get; set; }
         public string? NombreLogro { get; set; }

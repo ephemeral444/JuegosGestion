@@ -3,10 +3,11 @@ using GestionJ_biblioteca.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using GestionJ_biblioteca.Interfaces;
 
 namespace GestionJ_biblioteca.Implementaciones
 {
-    public class Conexion : DbContext
+    public class Conexion : DbContext, IConexion
     {
         public DbSet<BibliotecaUsuarios>? BibliotecaUsuarios { get; set; }
         public DbSet<ConfigAudios>? ConfigAudios{ get; set; }
@@ -28,6 +29,7 @@ namespace GestionJ_biblioteca.Implementaciones
         public DbSet<Trucos>? Trucos { get; set; }
         public DbSet<Usuarios>? Usuarios { get; set; }
         public DbSet<Videojuegos>? Videojuegos { get; set; }
+        public string? string_conexion { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
