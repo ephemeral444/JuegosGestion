@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="GestionesJ_Api/GestionesJ_Api.csproj" Id="d662a8b8-6144-4f23-a200-5b3b07bb678c" />
+  <Project Path="GestionJ_biblioteca/GestionJ_biblioteca.csproj" />
+</Solution>
