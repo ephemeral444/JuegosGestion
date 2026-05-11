@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class GuardadoJuegos : Auditorias
+    public class GuardadoJuegos 
     {
         [Key] public int Id { get; set; }
         public DateOnly FechaGuardado { get; set; }

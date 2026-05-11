@@ -13,6 +13,7 @@ namespace GestionJ_biblioteca.Interfaces
     {
         string? string_conexion { get; set; }
 
+        public DbSet<Auditorias>? Auditorias { get; set; }
         public DbSet<BibliotecaUsuarios>? BibliotecaUsuarios { get; set; }
         public DbSet<ConfigAudios>? ConfigAudios { get; set; }
         public DbSet<ConfiGenerales>? ConfiGenerales { get; set; }
@@ -33,6 +34,7 @@ namespace GestionJ_biblioteca.Interfaces
         public DbSet<Trucos>? Trucos { get; set; }
         public DbSet<Usuarios>? Usuarios { get; set; }
         public DbSet<Videojuegos>? Videojuegos { get; set; }
+        public DbSet<Roles>? Roles { get; set; }
 
         int SaveChanges();
         DatabaseFacade Database { get; }

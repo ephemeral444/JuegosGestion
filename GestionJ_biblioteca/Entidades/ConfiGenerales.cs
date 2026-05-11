@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class ConfiGenerales : Auditorias
+    public class ConfiGenerales
     {
         [Key] public int Id { get; set; }
         public string? Idioma { get; set; }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class Logros : Auditorias
+    public class Logros 
     {
         [Key] public int Id { get; set; }
         public string? NombreLogro { get; set; }
@@ -14,6 +14,12 @@ namespace GestionJ_biblioteca.Entidades
         public bool EstadoDesbloqueado { get; set; }
         public DateOnly FechaDesbloqueo { get; set; }
         public int Puntos { get; set; }
+
+        // FOREIGN KEY
+        public int VideojuegoId { get; set; }
+
+        // RELACION
+        public Videojuegos _videojuego { get; set; }
 
     }
 }

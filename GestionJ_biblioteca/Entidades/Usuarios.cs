@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class Usuarios : Auditorias
+    public class Usuarios 
     {
         [Key] public int Id { get; set; }
         public string? Nombre { get; set; }
@@ -18,7 +18,13 @@ namespace GestionJ_biblioteca.Entidades
         public int TargetaCredito { get; set; }
         public bool Suscripcion { get; set; }
 
-        public List<Videojuegos> Juegos { get; set; }
-        public List<Logros> Logros { get; set; }
+        // FOREIGN KEY
+        public int RolId { get; set; }
+
+        // RELACION
+        public Roles _rol { get; set; }
+        public List<Videojuegos> Videojuegos { get; set; }
+        public List<Descargas> Descargas { get; set; }
+        public List<Notificaciones> Notificaciones { get; set; }
     }
 }

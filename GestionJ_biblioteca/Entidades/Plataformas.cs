@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class Plataformas : Auditorias
+    public class Plataformas 
     {
         [Key] public int Id { get; set; }
         public string? NombrePlataforma { get; set; }
@@ -15,6 +15,7 @@ namespace GestionJ_biblioteca.Entidades
         public string? Descripcion { get; set; }
         public DateOnly FechaLanzamiento { get; set; }
 
-        public List<Emuladores>? Emuladores { get; set; }
+        public List<Videojuegos> Videojuegos { get; set; }
+        public List<Emuladores> Emuladores { get; set; }
     }
 }

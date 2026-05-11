@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class Videojuegos : Auditorias
+    public class Videojuegos 
     {
         [Key] public int Id { get; set; }
         public string? Titulo { get; set; }
@@ -19,9 +19,17 @@ namespace GestionJ_biblioteca.Entidades
         public bool Licencia { get; set; }
         public bool Completado { get; set; }
 
-        public List<Roms>? Roms { get; set; }
-        public List<Trucos>? Trucos { get; set; }
-        public List<Emuladores>? Emuladores { get; set; }
-        public List<Logros>? Logros { get; set; }
+        // FOREIGN KEYS
+        public int UsuarioId { get; set; }
+        public int PlataformaId { get; set; }
+
+        // RELACIONES
+        public Usuarios _usuario { get; set; }
+        public Plataformas _plataforma { get; set; }
+        public List<Roms> Roms { get; set; }
+        public List<Logros> Logros { get; set; }
+        public List<Trucos> Trucos { get; set; }
+        public List<SesionesJuegos> SesionesJuegos { get; set; }
+        public List<Estadisticas> Estadisticas { get; set; }
     }
 }

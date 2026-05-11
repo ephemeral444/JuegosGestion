@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class Emuladores : Auditorias
+    public class Emuladores 
     {
         [Key] public int Id { get; set; }
         public string? Nombre { get; set; }
@@ -14,6 +14,11 @@ namespace GestionJ_biblioteca.Entidades
         public string? Bios { get; set; }
         public string? RegionBios { get; set; }
 
-        public List<Videojuegos>? Videojuegos { get; set; }
+        // FOREIGN KEY
+        public int PlataformaId { get; set; }
+
+        // RELACION
+        public Plataformas _plataforma { get; set; }
+        public List<Roms> Roms { get; set; }
     }
 }

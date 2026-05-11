@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class ConfigAudios : Auditorias
+    public class ConfigAudios 
     {
         [Key] public int Id { get; set; }
         public string? Latencia { get; set; }

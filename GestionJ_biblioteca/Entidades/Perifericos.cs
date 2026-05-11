@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class Perifericos : Auditorias
+    public class Perifericos 
     {
         [Key] public int Id { get; set; }  
         public bool Video { get; set; }

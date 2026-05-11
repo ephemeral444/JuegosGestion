@@ -7,16 +7,10 @@ namespace GestionJ_biblioteca.Entidades
 {
     public class Auditorias
     {
-        [Key] public int IdAuditoria { get; set; }
-
-        public DateTime FechaCreacion { get; set; } = DateTime.Now;
-
-        public DateTime? FechaActualizacion { get; set; }
-
-        public string UsuarioCreacion { get; set; }
-
-        public string UsuarioModificacion { get; set; }
-
-        public bool Estado { get; set; } = true;
+        [Key] public int Id { get; set; }
+        public DateTime Fecha { get; set; }
+        public string? NombreTabla { get; set; }
+        public string? Operacion { get; set; }
+        public string? Descripcion { get; set; }
     }
 }

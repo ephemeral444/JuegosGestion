@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
 {
-    public class GestorArchivos : Auditorias
+    public class GestorArchivos 
     {
         [Key] public int Id { get; set; }
         public string? NombreArchivo { get; set; }
