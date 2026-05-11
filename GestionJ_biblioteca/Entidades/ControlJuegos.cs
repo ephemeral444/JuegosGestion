@@ -12,5 +12,8 @@ namespace GestionJ_biblioteca.Entidades
         public string? Controles { get; set; }
         public int Sensibilidad { get; set; }
         public string? Dificultad { get; set; }
+        public int UsuarioId { get; set; }
+
+        public Usuarios? _usuario { get; set; }
     }
 }

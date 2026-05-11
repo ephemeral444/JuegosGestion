@@ -11,5 +11,8 @@ namespace GestionJ_biblioteca.Entidades
         public string? Accion { get; set; }
         public DateOnly FechaGestion { get; set; }
         public bool Resultado { get; set; }
+        public int UsuarioId { get; set; }
+
+        public Usuarios? _usuario { get; set; }
     }
 }

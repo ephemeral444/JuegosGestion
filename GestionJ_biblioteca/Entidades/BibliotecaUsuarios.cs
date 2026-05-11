@@ -11,6 +11,9 @@ namespace GestionJ_biblioteca.Entidades
         public DateOnly FechaRegistro { get; set; }
         public string? Favoritos { get; set; }
         public string? HorasJugadas { get; set; }
+        public int UsuarioId { get; set; }
+
+        public Usuarios? _usuario { get; set; }
     }
 }
 

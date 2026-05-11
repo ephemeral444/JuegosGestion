@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using GestionJ_biblioteca.Entidades;
+﻿using GestionJ_biblioteca.Entidades;
 using GestionJ_biblioteca.Interfaces;
+using GestionJ_biblioteca.Nucleos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,40 +10,86 @@ namespace GestionJ_biblioteca.Implementaciones
 {
     public class RomsApli : IRomsApli
     {
-        private Conexion db = new Conexion();
+        private IConexion? iConexion;
 
         public List<Roms> Consultar()
         {
-            return db.Roms!.ToList();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            var lista = iConexion.Roms!.ToList();
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "Roms";
+            auditoria.Operacion = "Consultar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se consultaron todas las roms";
+            iConexion.Auditorias!.Add(auditoria);
+            iConexion.SaveChanges();
+
+            return lista;
         }
 
         public Roms Guardar(Roms entidad)
         {
             if (entidad.Id != 0)
-                throw new Exception("Ya existe");
+                throw new Exception("Ya se guardó");
 
-            db.Roms!.Add(entidad);
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.Roms!.Add(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "Roms";
+            auditoria.Operacion = "Guardar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se guardó la rom";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
 
         public Roms Modificar(Roms entidad)
         {
             if (entidad.Id == 0)
-                throw new Exception("Id inválido");
+                throw new Exception("No se ha guardado");
 
-            db.Entry(entidad).State = EntityState.Modified;
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.Roms!.Update(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "Roms";
+            auditoria.Operacion = "Modificar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se modificó la rom";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
 
         public Roms Eliminar(Roms entidad)
         {
             if (entidad.Id == 0)
-                throw new Exception("Id inválido");
+                throw new Exception("No se ha guardado");
 
-            db.Roms!.Remove(entidad);
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.Roms!.Remove(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "Roms";
+            auditoria.Operacion = "Eliminar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se eliminó la rom";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
     }

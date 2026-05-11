@@ -9,7 +9,7 @@ namespace GestionJ_biblioteca.Implementaciones
 {
     public class Conexion : DbContext, IConexion
     {
-        public DbSet<Auditorias>? auditorias { get; set; }
+        public DbSet<Auditorias>? Auditorias { get; set; }
         public DbSet<BibliotecaUsuarios>? BibliotecaUsuarios { get; set; }
         public DbSet<ConfigAudios>? ConfigAudios{ get; set; }
         public DbSet<ConfiGenerales>? ConfiGenerales { get; set; }
@@ -31,12 +31,12 @@ namespace GestionJ_biblioteca.Implementaciones
         public DbSet<Usuarios>? Usuarios { get; set; }
         public DbSet<Videojuegos>? Videojuegos { get; set; }
         public DbSet<Roles>? Roles { get; set; }
-        public string? string_conexion { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string? string_conexion { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                "Server=localhost;Database=GestionJuegosDB;Trusted_Connection=True;TrustServerCertificate=True;"
+                "Server=(localdb)\\MSSQLLocalDB;Database=GestionJuegosDB;Trusted_Connection=True;TrustServerCertificate=True;"
             );
         }
     }

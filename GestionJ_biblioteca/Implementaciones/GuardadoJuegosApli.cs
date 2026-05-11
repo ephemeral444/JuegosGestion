@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using GestionJ_biblioteca.Entidades;
+﻿using GestionJ_biblioteca.Entidades;
 using GestionJ_biblioteca.Interfaces;
+using GestionJ_biblioteca.Nucleos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,40 +10,86 @@ namespace GestionJ_biblioteca.Implementaciones
 {
     public class GuardadoJuegosApli : IGuardadoJuegosApli
     {
-        private Conexion db = new Conexion();
+        private IConexion? iConexion;
 
         public List<GuardadoJuegos> Consultar()
         {
-            return db.GuardadoJuegos!.ToList();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            var lista = iConexion.GuardadoJuegos!.ToList();
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "GuardadoJuegos";
+            auditoria.Operacion = "Consultar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se consultaron todos los guardados de juegos";
+            iConexion.Auditorias!.Add(auditoria);
+            iConexion.SaveChanges();
+
+            return lista;
         }
 
         public GuardadoJuegos Guardar(GuardadoJuegos entidad)
         {
             if (entidad.Id != 0)
-                throw new Exception("Ya existe");
+                throw new Exception("Ya se guardó");
 
-            db.GuardadoJuegos!.Add(entidad);
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.GuardadoJuegos!.Add(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "GuardadoJuegos";
+            auditoria.Operacion = "Guardar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se guardó un guardado de juego";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
 
         public GuardadoJuegos Modificar(GuardadoJuegos entidad)
         {
             if (entidad.Id == 0)
-                throw new Exception("Id inválido");
+                throw new Exception("No se ha guardado");
 
-            db.Entry(entidad).State = EntityState.Modified;
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.GuardadoJuegos!.Update(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "GuardadoJuegos";
+            auditoria.Operacion = "Modificar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se modificó un guardado de juego";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
 
         public GuardadoJuegos Eliminar(GuardadoJuegos entidad)
         {
             if (entidad.Id == 0)
-                throw new Exception("Id inválido");
+                throw new Exception("No se ha guardado");
 
-            db.GuardadoJuegos!.Remove(entidad);
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.GuardadoJuegos!.Remove(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "GuardadoJuegos";
+            auditoria.Operacion = "Eliminar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se eliminó un guardado de juego";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
     }

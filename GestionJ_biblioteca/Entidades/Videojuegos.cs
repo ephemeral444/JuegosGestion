@@ -12,24 +12,22 @@ namespace GestionJ_biblioteca.Entidades
         public string? Genero { get; set; }
         public string? Formato { get; set; }
         public string? Desarrolladora { get; set; }
-        public string? Plataforma { get; set; }
         public string? Region { get; set; }
-        public string? Tamaño { get; set; }
+        public string? Tamanio { get; set; }
         public DateOnly FechaLanzamiento { get; set; }
         public bool Licencia { get; set; }
         public bool Completado { get; set; }
-
-        // FOREIGN KEYS
         public int UsuarioId { get; set; }
         public int PlataformaId { get; set; }
 
-        // RELACIONES
-        public Usuarios _usuario { get; set; }
-        public Plataformas _plataforma { get; set; }
-        public List<Roms> Roms { get; set; }
-        public List<Logros> Logros { get; set; }
-        public List<Trucos> Trucos { get; set; }
-        public List<SesionesJuegos> SesionesJuegos { get; set; }
-        public List<Estadisticas> Estadisticas { get; set; }
+        public Usuarios? _usuario { get; set; }
+        public Plataformas? _plataforma { get; set; }
+
+        public List<Roms>? Roms { get; set; }
+        public List<Logros>? Logros { get; set; }
+        public List<Trucos>? Trucos { get; set; }
+        public List<SesionesJuegos>? SesionesJuegos { get; set; }
+        public List<Estadisticas>? Estadisticas { get; set; }
+        public List<GuardadoJuegos>? GuardadoJuegos { get; set; }
     }
 }

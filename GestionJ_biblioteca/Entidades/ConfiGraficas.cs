@@ -12,5 +12,8 @@ namespace GestionJ_biblioteca.Entidades
         public string? Filtros { get; set; }
         public string? Shaders { get; set; }
         public bool Vsync { get; set; }
+        public int ConfiGeneralId { get; set; }
+
+        public ConfiGenerales? _confiGeneral { get; set; }
     }
 }

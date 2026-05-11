@@ -12,5 +12,10 @@ namespace GestionJ_biblioteca.Entidades
         public string? Proceso { get; set; }
         public string? Ubicacion { get; set; }
         public string? HorasJugadas { get; set; }
+        public int UsuarioId { get; set; }
+        public int VideojuegoId { get; set; }
+
+        public Usuarios? _usuario { get; set; }
+        public Videojuegos? _videojuego { get; set; }
     }
 }

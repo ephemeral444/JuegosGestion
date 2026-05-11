@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using GestionJ_biblioteca.Entidades;
+﻿using GestionJ_biblioteca.Entidades;
 using GestionJ_biblioteca.Interfaces;
+using GestionJ_biblioteca.Nucleos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,40 +10,86 @@ namespace GestionJ_biblioteca.Implementaciones
 {
     public class ConfiGeneralesApli : IConfiGeneralesApli
     {
-        private Conexion db = new Conexion();
+        private IConexion? iConexion;
 
         public List<ConfiGenerales> Consultar()
         {
-            return db.ConfiGenerales!.ToList();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            var lista = iConexion.ConfiGenerales!.ToList();
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "ConfiGenerales";
+            auditoria.Operacion = "Consultar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se consultaron todas las configuraciones generales";
+            iConexion.Auditorias!.Add(auditoria);
+            iConexion.SaveChanges();
+
+            return lista;
         }
 
         public ConfiGenerales Guardar(ConfiGenerales entidad)
         {
             if (entidad.Id != 0)
-                throw new Exception("Ya existe");
+                throw new Exception("Ya se guardó");
 
-            db.ConfiGenerales!.Add(entidad);
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.ConfiGenerales!.Add(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "ConfiGenerales";
+            auditoria.Operacion = "Guardar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se guardó una configuracion general";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
 
         public ConfiGenerales Modificar(ConfiGenerales entidad)
         {
             if (entidad.Id == 0)
-                throw new Exception("Id inválido");
+                throw new Exception("No se ha guardado");
 
-            db.Entry(entidad).State = EntityState.Modified;
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.ConfiGenerales!.Update(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "ConfiGenerales";
+            auditoria.Operacion = "Modificar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se modificó una configuracion general";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
 
         public ConfiGenerales Eliminar(ConfiGenerales entidad)
         {
             if (entidad.Id == 0)
-                throw new Exception("Id inválido");
+                throw new Exception("No se ha guardado");
 
-            db.ConfiGenerales!.Remove(entidad);
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.ConfiGenerales!.Remove(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "ConfiGenerales";
+            auditoria.Operacion = "Eliminar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se eliminó una configuracion general";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
     }

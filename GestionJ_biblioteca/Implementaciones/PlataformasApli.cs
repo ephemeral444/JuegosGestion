@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using GestionJ_biblioteca.Entidades;
+﻿using GestionJ_biblioteca.Entidades;
 using GestionJ_biblioteca.Interfaces;
+using GestionJ_biblioteca.Nucleos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,40 +10,86 @@ namespace GestionJ_biblioteca.Implementaciones
 {
     public class PlataformasApli : IPlataformasApli
     {
-        private Conexion db = new Conexion();
+        private IConexion? iConexion;
 
         public List<Plataformas> Consultar()
         {
-            return db.Plataformas!.ToList();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            var lista = iConexion.Plataformas!.ToList();
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "Plataformas";
+            auditoria.Operacion = "Consultar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se consultaron todas las plataformas";
+            iConexion.Auditorias!.Add(auditoria);
+            iConexion.SaveChanges();
+
+            return lista;
         }
 
         public Plataformas Guardar(Plataformas entidad)
         {
             if (entidad.Id != 0)
-                throw new Exception("Ya existe");
+                throw new Exception("Ya se guardó");
 
-            db.Plataformas!.Add(entidad);
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.Plataformas!.Add(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "Plataformas";
+            auditoria.Operacion = "Guardar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se guardó una plataforma";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
 
         public Plataformas Modificar(Plataformas entidad)
         {
             if (entidad.Id == 0)
-                throw new Exception("Id inválido");
+                throw new Exception("No se ha guardado");
 
-            db.Entry(entidad).State = EntityState.Modified;
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.Plataformas!.Update(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "Plataformas";
+            auditoria.Operacion = "Modificar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se modificó una plataforma";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
 
         public Plataformas Eliminar(Plataformas entidad)
         {
             if (entidad.Id == 0)
-                throw new Exception("Id inválido");
+                throw new Exception("No se ha guardado");
 
-            db.Plataformas!.Remove(entidad);
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.Plataformas!.Remove(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "Plataformas";
+            auditoria.Operacion = "Eliminar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se eliminó una plataforma";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
     }

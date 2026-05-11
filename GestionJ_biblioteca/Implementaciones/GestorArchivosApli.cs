@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using GestionJ_biblioteca.Entidades;
+﻿using GestionJ_biblioteca.Entidades;
 using GestionJ_biblioteca.Interfaces;
+using GestionJ_biblioteca.Nucleos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,40 +10,86 @@ namespace GestionJ_biblioteca.Implementaciones
 {
     public class GestorArchivosApli : IGestorArchivosApli
     {
-        private Conexion db = new Conexion();
+        private IConexion? iConexion;
 
         public List<GestorArchivos> Consultar()
         {
-            return db.GestorArchivos!.ToList();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            var lista = iConexion.GestorArchivos!.ToList();
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "GestorArchivos";
+            auditoria.Operacion = "Consultar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se consultaron todos los archivos";
+            iConexion.Auditorias!.Add(auditoria);
+            iConexion.SaveChanges();
+
+            return lista;
         }
 
         public GestorArchivos Guardar(GestorArchivos entidad)
         {
             if (entidad.Id != 0)
-                throw new Exception("Ya existe");
+                throw new Exception("Ya se guardó");
 
-            db.GestorArchivos!.Add(entidad);
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.GestorArchivos!.Add(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "GestorArchivos";
+            auditoria.Operacion = "Guardar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se guardó un archivo";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
 
         public GestorArchivos Modificar(GestorArchivos entidad)
         {
             if (entidad.Id == 0)
-                throw new Exception("Id inválido");
+                throw new Exception("No se ha guardado");
 
-            db.Entry(entidad).State = EntityState.Modified;
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.GestorArchivos!.Update(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "GestorArchivos";
+            auditoria.Operacion = "Modificar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se modificó un archivo";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
 
         public GestorArchivos Eliminar(GestorArchivos entidad)
         {
             if (entidad.Id == 0)
-                throw new Exception("Id inválido");
+                throw new Exception("No se ha guardado");
 
-            db.GestorArchivos!.Remove(entidad);
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.GestorArchivos!.Remove(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "GestorArchivos";
+            auditoria.Operacion = "Eliminar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se eliminó un archivo";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
     }

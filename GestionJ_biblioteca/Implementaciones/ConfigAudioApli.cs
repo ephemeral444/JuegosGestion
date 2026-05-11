@@ -1,48 +1,95 @@
-﻿using Microsoft.EntityFrameworkCore;
-using GestionJ_biblioteca.Entidades;
+﻿using GestionJ_biblioteca.Entidades;
 using GestionJ_biblioteca.Interfaces;
+using GestionJ_biblioteca.Nucleos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace GestionJ_biblioteca.Implementaciones
 {
-    public class ConfigAudioApli : IAudioConfigApli
+    public class ConfigAudiosApli : IAudioConfigApli
     {
-        private Conexion db = new Conexion();
+        private IConexion? iConexion;
 
         public List<ConfigAudios> Consultar()
         {
-            return db.ConfigAudios!.ToList();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            var lista = iConexion.ConfigAudios!.ToList();
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "ConfigAudios";
+            auditoria.Operacion = "Consultar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se consultaron todas las configuraciones de audio";
+            iConexion.Auditorias!.Add(auditoria);
+            iConexion.SaveChanges();
+
+            return lista;
         }
 
         public ConfigAudios Guardar(ConfigAudios entidad)
         {
             if (entidad.Id != 0)
-                throw new Exception("Ya existe");
+                throw new Exception("Ya se guardó");
 
-            db.ConfigAudios!.Add(entidad);
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.ConfigAudios!.Add(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "ConfigAudios";
+            auditoria.Operacion = "Guardar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se guardó una configuracion de audio";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
 
         public ConfigAudios Modificar(ConfigAudios entidad)
         {
             if (entidad.Id == 0)
-                throw new Exception("Id inválido");
+                throw new Exception("No se ha guardado");
 
-            db.Entry(entidad).State = EntityState.Modified;
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.ConfigAudios!.Update(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "ConfigAudios";
+            auditoria.Operacion = "Modificar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se modificó una configuracion de audio";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
 
         public ConfigAudios Eliminar(ConfigAudios entidad)
         {
             if (entidad.Id == 0)
-                throw new Exception("Id inválido");
+                throw new Exception("No se ha guardado");
 
-            db.ConfigAudios!.Remove(entidad);
-            db.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+
+            iConexion.ConfigAudios!.Remove(entidad);
+
+            var auditoria = new Auditorias();
+            auditoria.NombreTabla = "ConfigAudios";
+            auditoria.Operacion = "Eliminar";
+            auditoria.Fecha = DateTime.Now;
+            auditoria.Descripcion = "Se eliminó una configuracion de audio";
+            iConexion.Auditorias!.Add(auditoria);
+
+            iConexion.SaveChanges();
             return entidad;
         }
     }

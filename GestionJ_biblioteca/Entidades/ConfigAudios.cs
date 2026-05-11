@@ -12,5 +12,8 @@ namespace GestionJ_biblioteca.Entidades
         public string? Frecuencia { get; set; }
         public int Volumen { get; set; }
         public string? Modo { get; set; }
+        public int ConfiGeneralId { get; set; }
+
+        public ConfiGenerales? _confiGeneral { get; set; }
     }
 }
