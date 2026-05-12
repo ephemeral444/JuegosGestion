@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Presentaciones_biblioteca.Implementaciones
 {
-    internal class Trucos_Presentaciones
+    internal class Videojuegos_Presentacion
     {
     }
 }
