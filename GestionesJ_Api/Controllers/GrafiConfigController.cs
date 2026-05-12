@@ -8,7 +8,7 @@ namespace GestionesJ_Api.Controllers
     [Route("api/[controller]")]
     public class GrafiConfiController : ControllerBase
     {
-        private ConfiGraficaApli servicio = new ConfiGraficaApli();
+        private ConfiGraficasApli servicio = new ConfiGraficasApli();
 
         [HttpGet]
         public List<ConfiGraficas> Get() => servicio.Consultar();

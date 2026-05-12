@@ -35,10 +35,11 @@ namespace GestionJ_biblioteca.Implementaciones
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(
-                "Server=(localdb)\\MSSQLLocalDB;Database=GestionJuegosDB;Trusted_Connection=True;TrustServerCertificate=True;"
-            );
+            optionsBuilder.UseSqlServer("server=(localdb)\\MSSQLLocalDB;Integrated Security=True;TrustServerCertificate=true;database=GestionJuegosDB;", p => { });
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
+
+
     }
 
 }

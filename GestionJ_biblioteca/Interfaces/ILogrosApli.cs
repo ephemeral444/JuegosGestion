@@ -13,5 +13,6 @@ namespace GestionJ_biblioteca.Interfaces
         Logros Guardar(Logros entidad);
         Logros Modificar(Logros entidad);
         Logros Eliminar(Logros entidad);
+        Logros Desbloquear(int usuarioId, Logros entidad);
     }
 }

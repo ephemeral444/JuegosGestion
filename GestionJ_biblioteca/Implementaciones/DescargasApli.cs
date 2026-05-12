@@ -40,7 +40,7 @@ namespace GestionJ_biblioteca.Implementaciones
 
             // Logica: usuarios sin suscripcion max 3 descargas activas
             var descargasActivas = iConexion.Descargas!
-                .Count(d => d.UsuarioId == entidad.UsuarioId && d.Estado == "Activa");
+                .Count(d => d.UsuarioId == entidad.UsuarioId && d.EstadoDescarga == "Activa");
             var usuario = iConexion.Usuarios!.FirstOrDefault(u => u.Id == entidad.UsuarioId);
             if (usuario != null && !usuario.Suscripcion && descargasActivas >= 3)
                 throw new Exception("Sin suscripcion solo puedes tener 3 descargas activas");

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
@@ -12,14 +13,12 @@ namespace GestionJ_biblioteca.Entidades
         public string? Descripcion { get; set; }
         public string? Rareza { get; set; }
         public bool EstadoDesbloqueado { get; set; }
-        public DateOnly FechaDesbloqueo { get; set; }
+        public DateOnly? FechaDesbloqueo { get; set; }
         public int Puntos { get; set; }
-
-        // FOREIGN KEY
         public int VideojuegoId { get; set; }
 
-        // RELACION
-        public Videojuegos _videojuego { get; set; }
+        [ForeignKey("VideojuegoId")]
+        public Videojuegos? _videojuego { get; set; }
 
     }
 }

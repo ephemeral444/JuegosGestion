@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
@@ -23,8 +24,13 @@ namespace GestionJ_biblioteca.Entidades
         public int PerifericoId { get; set; }
         public int GestorArchivoId { get; set; }
 
+        [ForeignKey("RolId")]
         public Roles? _rol { get; set; }
+
+        [ForeignKey("PerifericoId")]
         public Perifericos? _periferico { get; set; }
+
+        [ForeignKey("GestorArchivoId")]
         public GestorArchivos? _gestorArchivo { get; set; }
 
         public List<Videojuegos>? Videojuegos { get; set; }

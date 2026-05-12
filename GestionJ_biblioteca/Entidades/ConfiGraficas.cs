@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
@@ -14,6 +15,7 @@ namespace GestionJ_biblioteca.Entidades
         public bool Vsync { get; set; }
         public int ConfiGeneralId { get; set; }
 
+        [ForeignKey("ConfiGeneralId")]
         public ConfiGenerales? _confiGeneral { get; set; }
     }
 }

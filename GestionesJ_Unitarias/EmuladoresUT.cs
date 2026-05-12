@@ -1,5 +1,6 @@
 ﻿using GestionJ_biblioteca.Implementaciones;
 using GestionJ_biblioteca.Interfaces;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GestionesJ_Unitarias
 {
@@ -12,9 +13,7 @@ namespace GestionesJ_Unitarias
             IConexion conexion = new Conexion();
             conexion.string_conexion = "server=localhost;Integrated Security=True;TrustServerCertificate=true;database=GestionJuegosDB;";
             var lista = conexion.Emuladores!.ToList();
-            if (lista.Count > 0)
-                return;
-            throw new Exception();
+            Assert.IsNotNull(lista);
         }
     }
 }

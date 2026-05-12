@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace GestionJ_biblioteca.Entidades
@@ -13,11 +14,9 @@ namespace GestionJ_biblioteca.Entidades
         public string? Mensaje { get; set; }
         public string? TipoNotificacion { get; set; }
         public DateOnly Fecha { get; set; }
-
-        // FOREIGN KEY
         public int UsuarioId { get; set; }
 
-        // RELACION
-        public Usuarios _usuario { get; set; }
+        [ForeignKey("UsuarioId")]
+        public Usuarios? _usuario { get; set; }
     }
 }

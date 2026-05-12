@@ -12,12 +12,10 @@ namespace GestionJ_biblioteca.Entidades
         public int CodigoTruco { get; set; }
         public string? Descripcion { get; set; }
         public bool Activo { get; set; }
-        public DateOnly FechaCreacion { get; set; }
-
-        // FOREIGN KEY
+        public DateOnly FechaCreacionTruco { get; set; }
         public int VideojuegoId { get; set; }
 
-        // RELACION
-        public Videojuegos _videojuego { get; set; }
+        [ForeignKey("VideojuegoId")]
+        public Videojuegos? _videojuego { get; set; }
     }
 }

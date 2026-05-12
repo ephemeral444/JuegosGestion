@@ -8,7 +8,7 @@ namespace GestionesJ_Api.Controllers
     [Route("api/[controller]")]
     public class AudioConfigController : ControllerBase
     {
-        private ConfigAudioApli servicio = new ConfigAudioApli();
+        private ConfigAudiosApli servicio = new ConfigAudiosApli();
 
         [HttpGet]
         public List<ConfigAudios> Get() => servicio.Consultar();
