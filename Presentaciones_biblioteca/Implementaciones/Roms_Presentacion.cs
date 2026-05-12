@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Presentaciones_biblioteca.Implementaciones
 {
-    internal class Roles_Presentaciones
+    internal class Roms_Presentacion
     {
     }
 }
