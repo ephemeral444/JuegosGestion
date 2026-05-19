@@ -1,18 +1,17 @@
-﻿using GestionJ_biblioteca.Entidades;
-using Presentaciones_biblioteca.Interfaces;
+﻿using Bailes_Biblioteca.Entidades;
+using Bailes_Presentaciones.Interfaces;
 using Newtonsoft.Json;
 
-
-namespace Presentaciones_biblioteca.Implementaciones
+namespace Bailes_Presentaciones.Implementaciones
 {
-    public class ConfiGraficas_Presentacion : IConfiGraficas_Presentacion
+    public class Bailarinas_Presentacion : IBailarinas_Presentacion
     {
         private IComunicaciones? iComunicaciones;
 
-        public List<ConfiGraficas> Consultar()
+        public List<Bailarinas> Consultar()
         {
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfiGraficas/Get";
+            datos["Url"] = "http://localhost:5081/api/Bailarinas/Get";
 
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.Ejecutar(datos)!;
@@ -20,13 +19,13 @@ namespace Presentaciones_biblioteca.Implementaciones
             var respuesta = task.Result;
 
             if (!respuesta.ContainsKey("Valor"))
-                return new List<ConfiGraficas>();
+                return new List<Bailarinas>();
 
-            return JsonConvert.DeserializeObject<List<ConfiGraficas>>(
+            return JsonConvert.DeserializeObject<List<Bailarinas>>(
                 respuesta["Valor"].ToString()!)!;
         }
 
-        public ConfiGraficas Guardar(ConfiGraficas entidad)
+        public Bailarinas Guardar(Bailarinas entidad)
         {
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
@@ -34,7 +33,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfiGraficas/Post";
+            datos["Url"] = "http://localhost:5081/api/Bailarinas/Post";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarPost(datos)!;
@@ -42,13 +41,13 @@ namespace Presentaciones_biblioteca.Implementaciones
             var respuesta = task.Result;
 
             if (!respuesta.ContainsKey("Valor"))
-                return new ConfiGraficas();
+                return new Bailarinas();
 
-            return JsonConvert.DeserializeObject<ConfiGraficas>(
+            return JsonConvert.DeserializeObject<Bailarinas>(
                 respuesta["Valor"].ToString()!)!;
         }
 
-        public ConfiGraficas Modificar(ConfiGraficas entidad)
+        public Bailarinas Modificar(Bailarinas entidad)
         {
             if (entidad.Id == 0)
                 throw new Exception("No se ha guardado");
@@ -56,7 +55,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfiGraficas/Put";
+            datos["Url"] = "http://localhost:5081/api/Bailarinas/Put";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarPut(datos)!;
@@ -64,13 +63,13 @@ namespace Presentaciones_biblioteca.Implementaciones
             var respuesta = task.Result;
 
             if (!respuesta.ContainsKey("Valor"))
-                return new ConfiGraficas();
+                return new Bailarinas();
 
-            return JsonConvert.DeserializeObject<ConfiGraficas>(
+            return JsonConvert.DeserializeObject<Bailarinas>(
                 respuesta["Valor"].ToString()!)!;
         }
 
-        public ConfiGraficas Eliminar(ConfiGraficas entidad)
+        public Bailarinas Eliminar(Bailarinas entidad)
         {
             if (entidad.Id == 0)
                 throw new Exception("No se ha guardado");
@@ -78,7 +77,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfiGraficas/Delete";
+            datos["Url"] = "http://localhost:5081/api/Bailarinas/Delete";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarDelete(datos)!;
@@ -86,9 +85,9 @@ namespace Presentaciones_biblioteca.Implementaciones
             var respuesta = task.Result;
 
             if (!respuesta.ContainsKey("Valor"))
-                return new ConfiGraficas();
+                return new Bailarinas();
 
-            return JsonConvert.DeserializeObject<ConfiGraficas>(
+            return JsonConvert.DeserializeObject<Bailarinas>(
                 respuesta["Valor"].ToString()!)!;
         }
     }

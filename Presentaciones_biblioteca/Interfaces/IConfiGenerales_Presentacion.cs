@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class IConfiGraficas_Presentaciones
+    internal class IConfiGenerales_Presentacion
     {
     }
 }

@@ -1,6 +1,6 @@
 ﻿
 
-namespace Libreria_Presentacion.Interfaces
+namespace Presentaciones_biblioteca.Interfaces
 {
     public interface IComunicaciones
     {

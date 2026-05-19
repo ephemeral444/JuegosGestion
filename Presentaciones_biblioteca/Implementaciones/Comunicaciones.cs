@@ -1,8 +1,8 @@
-﻿using Libreria_Presentacion.Interfaces;
+﻿using Presentaciones_biblioteca.Interfaces;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace Libreria_Presentacion.Implementaciones
+namespace Presentaciones_biblioteca.Implementaciones
 {
     public class Comunicaciones: IComunicaciones
     {
