@@ -12,7 +12,7 @@ namespace GestionesJ_Unitarias
         {
             IConexion conexion = new Conexion();
             conexion.string_conexion = "server=localhost;Integrated Security=True;TrustServerCertificate=true;database=GestionJuegosDB;";
-            var lista = conexion.Usuarios!.ToList();
+            var lista = conexion.Trucos!.ToList();
             Assert.IsNotNull(lista);
         }
     }

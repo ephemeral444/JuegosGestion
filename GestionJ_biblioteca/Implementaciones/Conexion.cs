@@ -31,6 +31,7 @@ namespace GestionJ_biblioteca.Implementaciones
         public DbSet<Usuarios>? Usuarios { get; set; }
         public DbSet<Videojuegos>? Videojuegos { get; set; }
         public DbSet<Roles>? Roles { get; set; }
+        public DbSet<Permisos>? Permisos { get; set; }
         public string? string_conexion { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

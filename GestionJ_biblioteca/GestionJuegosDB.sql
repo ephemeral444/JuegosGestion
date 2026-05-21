@@ -249,3 +249,4 @@ CREATE TABLE Descargas (
     FOREIGN KEY (UsuarioId) REFERENCES Usuarios(Id),
     FOREIGN KEY (RomId) REFERENCES Roms(Id)
 );
+

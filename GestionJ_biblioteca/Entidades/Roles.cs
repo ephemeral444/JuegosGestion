@@ -12,5 +12,6 @@ namespace GestionJ_biblioteca.Entidades
         public string NombreRol { get; set; }
 
         public List<Usuarios> Usuarios { get; set; }
+        public List<Permisos>? Permisos { get; set; }
     }
 }
