@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GestionJ_biblioteca.Entidades;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class IVideojuegos_Presentacion
+    public interface IVideojeugos_Presentacion
     {
+        List<Videojuegos> Consultar();
+        Videojuegos Guardar(Videojuegos entidad);
+        Videojuegos Modificar(Videojuegos entidad);
+        Videojuegos Eliminar(Videojuegos entidad);
     }
 }

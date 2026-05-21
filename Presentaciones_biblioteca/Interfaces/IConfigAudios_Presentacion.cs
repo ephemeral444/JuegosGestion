@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GestionJ_biblioteca.Entidades;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class IConfigAudios_Presentacion
+    public interface IConfigAudios_Presentacion
     {
+        List<ConfigAudios> Consultar();
+        ConfigAudios Guardar(ConfigAudios entidad);
+        ConfigAudios Modificar(ConfigAudios entidad);
+        ConfigAudios Eliminar(ConfigAudios entidad);
     }
 }

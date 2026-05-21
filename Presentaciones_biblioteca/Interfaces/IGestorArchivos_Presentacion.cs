@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GestionJ_biblioteca.Entidades;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class IGestorArchivos_Presentacion
+    public interface IGestorArchivos_Presentacion
     {
+        List<GestorArchivos> Consultar();
+        GestorArchivos Guardar(GestorArchivos entidad);
+        GestorArchivos Modificar(GestorArchivos entidad);
+        GestorArchivos Eliminar(GestorArchivos entidad);
     }
 }

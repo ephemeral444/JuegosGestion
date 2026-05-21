@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GestionJ_biblioteca.Entidades;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class IGuardadoJuegos_Presentacion
+    public interface IGuardadoJuegos_Presentacion
     {
+        List<GuardadoJuegos> Consultar();
+        GuardadoJuegos Guardar(GuardadoJuegos entidad);
+        GuardadoJuegos Modificar(GuardadoJuegos entidad);
+        GuardadoJuegos Eliminar(GuardadoJuegos entidad);
     }
 }

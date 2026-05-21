@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GestionJ_biblioteca.Entidades;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class ILogros_Presentacion
+    public interface ILogros_Presentacion
     {
+        List<Logros> Consultar();
+        Logros Guardar(Logros entidad);
+        Logros Modificar(Logros entidad);
+        Logros Eliminar(Logros entidad);
     }
 }

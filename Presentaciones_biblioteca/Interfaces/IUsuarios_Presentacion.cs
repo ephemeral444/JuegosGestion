@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GestionJ_biblioteca.Entidades;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class IUsuarios_Presentacion
+    public interface IUsuarios_Presentacion
     {
+        List<Usuarios> Consultar();
+        Usuarios Guardar(Usuarios entidad);
+        Usuarios Modificar(Usuarios entidad);
+        Usuarios Eliminar(Usuarios entidad);
     }
 }

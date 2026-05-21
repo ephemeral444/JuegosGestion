@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GestionJ_biblioteca.Entidades;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class ITrucos_Presentacion
+    public interface ITrucos_Presentacion
     {
+        List<Trucos> Consultar();
+        Trucos Guardar(Trucos entidad);
+        Trucos Modificar(Trucos entidad);
+        Trucos Eliminar(Trucos entidad);
     }
 }

@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GestionJ_biblioteca.Entidades;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class IPerifericos_Presentacion
+    public interface IPerifericos_Presentacion
     {
+        List<Perifericos> Consultar();
+        Perifericos Guardar(Perifericos entidad);
+        Perifericos Modificar(Perifericos entidad);
+        Perifericos Eliminar(Perifericos entidad);
     }
 }

@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GestionJ_biblioteca.Entidades;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class IEmuladores_Presentacion
+    public interface IEmuladores_Presentacion
     {
+        List<Emuladores> Consultar();
+        Emuladores Guardar(Emuladores entidad);
+        Emuladores Modificar(Emuladores entidad);
+        Emuladores Eliminar(Emuladores entidad);
     }
 }

@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GestionJ_biblioteca.Entidades;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class IRoles_Presentacion
+    public interface IRoles_Presentacion
     {
+        List<Roles> Consultar();
+        Roles Guardar(Roles entidad);
+        Roles Modificar(Roles entidad);
+        Roles Eliminar(Roles entidad);
     }
 }

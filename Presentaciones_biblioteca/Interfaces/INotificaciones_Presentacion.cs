@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GestionJ_biblioteca.Entidades;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class INotificaciones_Presentacion
+    public interface INotificaciones_Presentacion
     {
+        List<Notificaciones> Consultar();
+        Notificaciones Guardar(Notificaciones entidad);
+        Notificaciones Modificar(Notificaciones entidad);
+        Notificaciones Eliminar(Notificaciones entidad);
     }
 }

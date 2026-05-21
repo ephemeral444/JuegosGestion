@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GestionJ_biblioteca.Entidades;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class IEstadisticas_Presentacion
+    public interface IEstadisticas_Presentacion
     {
+        List<Estadisticas> Consultar();
+        Estadisticas Guardar(Estadisticas entidad);
+        Estadisticas Modificar(Estadisticas entidad);
+        Estadisticas Eliminar(Estadisticas entidad);
     }
 }

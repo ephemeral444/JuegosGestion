@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GestionJ_biblioteca.Entidades;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class IDescargas_Presentacion
+    public interface IDescargas_Presentacion
     {
+        List<Descargas> Consultar();
+        Descargas Guardar(Descargas entidad);
+        Descargas Modificar(Descargas entidad);
+        Descargas Eliminar(Descargas entidad);
     }
 }

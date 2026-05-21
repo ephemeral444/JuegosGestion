@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GestionJ_biblioteca.Entidades;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class IConfiGenerales_Presentacion
+    public interface IConfiGenerales_Presentacion
     {
+        List<ConfiGenerales> Consultar();
+        ConfiGenerales Guardar(ConfiGenerales entidad);
+        ConfiGenerales Modificar(ConfiGenerales entidad);
+        ConfiGenerales Eliminar(ConfiGenerales entidad);
     }
 }

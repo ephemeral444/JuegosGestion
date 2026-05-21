@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GestionJ_biblioteca.Entidades;
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    internal class IRoms_Presentacion
+    public interface IRoms_Presentacion
     {
+        List<Roms> Consultar();
+        Roms Guardar(Roms entidad);
+        Roms Modificar(Roms entidad);
+        Roms Eliminar(Roms entidad);
     }
 }
