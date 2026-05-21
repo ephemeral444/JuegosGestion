@@ -12,7 +12,7 @@ namespace Presentaciones_biblioteca.Implementaciones
         public List<ConfiGenerales> Consultar()
         {
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfiGenerales/Get";
+            datos["Url"] = "http://localhost:5031/api/ConfiGenerales/Get";
 
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.Ejecutar(datos)!;
@@ -34,7 +34,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfiGeneral/Post";
+            datos["Url"] = "http://localhost:5031/api/ConfiGeneral/Post";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarPost(datos)!;
@@ -56,7 +56,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfiGenerales/Put";
+            datos["Url"] = "http://localhost:5031/api/ConfiGenerales/Put";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarPut(datos)!;
@@ -78,7 +78,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfiGenerales/Delete";
+            datos["Url"] = "http://localhost:5031/api/ConfiGenerales/Delete";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarDelete(datos)!;

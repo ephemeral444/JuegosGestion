@@ -12,7 +12,7 @@ namespace Presentaciones_biblioteca.Implementaciones
         public List<ConfiGraficas> Consultar()
         {
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfiGraficas/Get";
+            datos["Url"] = "http://localhost:5031/api/ConfiGraficas/Get";
 
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.Ejecutar(datos)!;
@@ -34,7 +34,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfiGraficas/Post";
+            datos["Url"] = "http://localhost:5031/api/ConfiGraficas/Post";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarPost(datos)!;
@@ -56,7 +56,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfiGraficas/Put";
+            datos["Url"] = "http://localhost:5031/api/ConfiGraficas/Put";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarPut(datos)!;
@@ -78,7 +78,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfiGraficas/Delete";
+            datos["Url"] = "http://localhost:5031/api/ConfiGraficas/Delete";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarDelete(datos)!;

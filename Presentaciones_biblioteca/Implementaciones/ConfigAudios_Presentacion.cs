@@ -12,7 +12,7 @@ namespace Presentaciones_biblioteca.Implementaciones
         public List<ConfigAudios> Consultar()
         {
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfigAudios/Get";
+            datos["Url"] = "http://localhost:5031/api/ConfigAudios/Get";
 
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.Ejecutar(datos)!;
@@ -34,7 +34,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfigAudios/Post";
+            datos["Url"] = "http://localhost:5031/api/ConfigAudios/Post";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarPost(datos)!;
@@ -56,7 +56,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfigAudios/Put";
+            datos["Url"] = "http://localhost:5031/api/ConfigAudios/Put";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarPut(datos)!;
@@ -78,7 +78,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/ConfigAudios/Delete";
+            datos["Url"] = "http://localhost:5031/api/ConfigAudios/Delete";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarDelete(datos)!;

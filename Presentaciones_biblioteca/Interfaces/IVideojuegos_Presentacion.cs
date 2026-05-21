@@ -2,7 +2,7 @@
 
 namespace Presentaciones_biblioteca.Interfaces
 {
-    public interface IVideojeugos_Presentacion
+    public interface IVideojuegos_Presentacion
     {
         List<Videojuegos> Consultar();
         Videojuegos Guardar(Videojuegos entidad);

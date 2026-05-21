@@ -11,7 +11,7 @@ namespace Presentaciones_biblioteca.Implementaciones
         public List<GuardadoJuegos> Consultar()
         {
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/GuardadoJuegos/Get";
+            datos["Url"] = "http://localhost:5031/api/GuardadoJuegos/Get";
 
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.Ejecutar(datos)!;
@@ -33,7 +33,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/GuardadoJuegos/Post";
+            datos["Url"] = "http://localhost:5031/api/GuardadoJuegos/Post";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarPost(datos)!;
@@ -55,7 +55,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/GuardadoJuegos/Put";
+            datos["Url"] = "http://localhost:5031/api/GuardadoJuegos/Put";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarPut(datos)!;
@@ -77,7 +77,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5081/api/GuardadoJuegos/Delete";
+            datos["Url"] = "http://localhost:5031/api/GuardadoJuegos/Delete";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarDelete(datos)!;

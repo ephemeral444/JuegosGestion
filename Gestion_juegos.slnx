@@ -2,5 +2,6 @@
   <Project Path="GestionesJ_Api/GestionesJ_Api.csproj" Id="d662a8b8-6144-4f23-a200-5b3b07bb678c" />
   <Project Path="GestionesJ_Unitarias/GestionesJ_Unitarias.csproj" Id="af061c61-657c-4a2b-9a3b-b1c8e42ebdd3" />
   <Project Path="GestionJ_biblioteca/GestionJ_biblioteca.csproj" />
+  <Project Path="GestionJ_Razor/GestionJ_Razor.csproj" Id="f17c30b9-db59-4f2a-befe-c26d6928cd1e" />
   <Project Path="Presentaciones_biblioteca/Presentaciones_biblioteca.csproj" Id="31b808a3-c5ea-4bbc-a8c0-a054d4d46e5e" />
 </Solution>
