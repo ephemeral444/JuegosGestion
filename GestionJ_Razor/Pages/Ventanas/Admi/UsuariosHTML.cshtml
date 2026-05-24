@@ -1,0 +1,185 @@
+﻿@* Pages/Ventanas/Admi/UsuariosHTML.cshtml *@
+@page
+@model GestionJ_Razor.Pages.Ventanas.Admi.UsuariosHTMLModel
+@{
+    ViewData["Title"] = "Usuarios";
+}
+
+<center>
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div align="left">
+                <h3>Usuarios</h3>
+            </div>
+
+            <div>
+                <input type="submit" value="Refrescar" class="btn btn-secondary" asp-page-handler="BtRefrescar" />
+                <input type="submit" value="Nuevo" class="btn btn-secondary" asp-page-handler="BtNuevo" disabled="@(Model.Usuario != null)" />
+                <input type="submit" value="Guardar" class="btn btn-secondary" asp-page-handler="BtGuardar" disabled="@(Model.Usuario == null)" />
+            </div>
+
+            @if (Model.Usuario != null)
+            {
+                <input type="hidden" asp-for="@Model.Usuario!.Id" />
+                <br />
+                <div>
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Usuario!.Nombre" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellido</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Usuario!.Apellido" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefono</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Usuario!.Telefono" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Edad</label>
+                        <div class="col-6">
+                            <input type="number" class="form-control" asp-for="@Model.Usuario!.Edad" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Pais</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Usuario!.Pais" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Usuario!.Correo" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Contrasena</label>
+                        <div class="col-6">
+                            <input type="password" class="form-control" asp-for="@Model.Usuario!.Contrasena" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tarjeta Credito</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Usuario!.TargetaCredito" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Suscripcion</label>
+                        <div class="col-6">
+                            <input type="checkbox" asp-for="@Model.Usuario!.Suscripcion" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Rol</label>
+                        <div class="col-6">
+                            <select class="form-control" asp-for="@Model.Usuario!.RolId">
+                                @if (Model.ListaRoles != null)
+                                {
+                                    @foreach (var rol in Model.ListaRoles)
+                                    {
+                                        <option value="@rol.Id">@rol.NombreRol</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Periferico</label>
+                        <div class="col-6">
+                            <select class="form-control" asp-for="@Model.Usuario!.PerifericoId">
+                                @if (Model.ListaPerifericos != null)
+                                {
+                                    @foreach (var p in Model.ListaPerifericos)
+                                    {
+                                        <option value="@p.Id">@p.Id - Video:@p.Video Audio:@p.Audio</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Gestor Archivo</label>
+                        <div class="col-6">
+                            <select class="form-control" asp-for="@Model.Usuario!.GestorArchivoId">
+                                @if (Model.ListaGestorArchivos != null)
+                                {
+                                    @foreach (var g in Model.ListaGestorArchivos)
+                                    {
+                                        <option value="@g.Id">@g.NombreArchivo</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (ViewData.ContainsKey("Mensaje"))
+            {
+                <div class="alert alert-danger mt-2">
+                    @ViewData["Mensaje"]
+                </div>
+            }
+
+            @if (Model.Usuario != null && Model.Borrando)
+            {
+                <div class="popup">
+                    <div class="pp_ms_inner">
+                        <div style="width:95%">
+                            <h2 align="left">Mensaje</h2>
+                            <h6 align="left">¿Desea borrar el Usuario?</h6>
+                            <h6 align="left">@Model.Usuario!.Nombre @Model.Usuario!.Apellido</h6>
+                            <input type="submit" value="Cerrar" asp-page-handler="BtCerrar" class="btn btn-secondary" />
+                            <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Lista != null && Model.Lista.Count > 0)
+            {
+                <br />
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo</th>
+                        <th>Pais</th>
+                        <th>Suscripcion</th>
+                        <th>Nivel</th>
+                        <th>Puntos</th>
+                        <th>Acciones</th>
+                    </tr>
+                    @foreach (var elemento in Model.Lista)
+                    {
+                        <tr>
+                            <td>@elemento.Id</td>
+                            <td>@elemento.Nombre</td>
+                            <td>@elemento.Apellido</td>
+                            <td>@elemento.Correo</td>
+                            <td>@elemento.Pais</td>
+                            <td>@(elemento.Suscripcion ? "Sí" : "No")</td>
+                            <td>@elemento.Nivel</td>
+                            <td>@elemento.PuntosTotal</td>
+                            <td>
+                                <input type="submit" value="Modificar" asp-page-handler="BtModificar" class="btn btn-warning btn-sm" asp-route-data="@elemento.Id" />
+                                <input type="submit" value="Borrar" asp-page-handler="BtBorrarVal" class="btn btn-danger btn-sm" asp-route-data="@elemento.Id" />
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </form>
+    </div>
+</center>
