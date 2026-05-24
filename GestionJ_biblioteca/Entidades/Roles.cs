@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace GestionJ_biblioteca.Entidades
 {
@@ -11,7 +12,9 @@ namespace GestionJ_biblioteca.Entidades
 
         public string? NombreRol { get; set; }
 
-        public List<Usuarios> Usuarios { get; set; }
+        [JsonIgnore]
+        public List<Usuarios>? Usuarios { get; set; }
+        [JsonIgnore]
         public List<Permisos>? Permisos { get; set; }
     }
 }
