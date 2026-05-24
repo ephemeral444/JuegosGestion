@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace GestionJ_biblioteca.Entidades
 {
@@ -15,9 +16,10 @@ namespace GestionJ_biblioteca.Entidades
         public string? RegionBios { get; set; }
         public int PlataformaId { get; set; }
 
-        [ForeignKey("PlataformaId")]
+        [ForeignKey("PlataformaId")] [JsonIgnore]
         public Plataformas? _plataforma { get; set; }
 
+        [JsonIgnore]
         public List<Roms>? Roms { get; set; }
     }
 }

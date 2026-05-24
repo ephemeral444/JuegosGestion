@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace GestionJ_biblioteca.Entidades
 {
@@ -18,11 +19,14 @@ namespace GestionJ_biblioteca.Entidades
         public int EmuladorId { get; set; }
 
         [ForeignKey("VideojuegoId")]
+        [JsonIgnore]
         public Videojuegos? _videojuego { get; set; }
 
         [ForeignKey("EmuladorId")]
+        [JsonIgnore]
         public Emuladores? _emulador { get; set; }
 
+        [JsonIgnore]
         public List<Descargas>? Descargas { get; set; }
     }
 }

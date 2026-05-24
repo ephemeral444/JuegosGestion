@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace GestionJ_biblioteca.Entidades
 {
@@ -16,6 +17,7 @@ namespace GestionJ_biblioteca.Entidades
         public int ConfiGeneralId { get; set; }
 
         [ForeignKey("ConfiGeneralId")]
+        [JsonIgnore] 
         public ConfiGenerales? _confiGeneral { get; set; }
     }
 }

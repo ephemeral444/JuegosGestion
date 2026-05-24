@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace GestionJ_biblioteca.Entidades
 {
@@ -22,16 +23,29 @@ namespace GestionJ_biblioteca.Entidades
         public int PlataformaId { get; set; }
 
         [ForeignKey("UsuarioId")]
+        [JsonIgnore] 
         public Usuarios? _usuario { get; set; }
 
         [ForeignKey("PlataformaId")]
+        [JsonIgnore]
         public Plataformas? _plataforma { get; set; }
 
+        [JsonIgnore]
         public List<Roms>? Roms { get; set; }
+
+        [JsonIgnore]
         public List<Logros>? Logros { get; set; }
+
+        [JsonIgnore]
         public List<Trucos>? Trucos { get; set; }
+
+        [JsonIgnore]
         public List<SesionesJuegos>? SesionesJuegos { get; set; }
+
+        [JsonIgnore]
         public List<Estadisticas>? Estadisticas { get; set; }
+
+        [JsonIgnore] 
         public List<GuardadoJuegos>? GuardadoJuegos { get; set; }
     }
 }

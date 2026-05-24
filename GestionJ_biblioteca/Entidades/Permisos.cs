@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace GestionJ_biblioteca.Entidades
 {
@@ -11,6 +12,7 @@ namespace GestionJ_biblioteca.Entidades
         public int RolId { get; set; }
 
         [ForeignKey("RolId")]
+        [JsonIgnore]
         public Roles? _rol { get; set; }
     }
 }

@@ -1,0 +1,121 @@
+﻿@* Pages/Ventanas/Admi/PlataformasHTML.cshtml *@
+@page
+@model GestionJ_Razor.Pages.Ventanas.Admi.PlataformasHTMLModel
+@{
+    ViewData["Title"] = "Plataformas";
+}
+
+<center>
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div align="left">
+                <h3>Plataformas</h3>
+            </div>
+
+            <div>
+                <input type="submit" value="Refrescar" class="btn btn-secondary" asp-page-handler="BtRefrescar" />
+                <input type="submit" value="Nuevo" class="btn btn-secondary" asp-page-handler="BtNuevo" disabled="@(Model.Plataforma != null)" />
+                <input type="submit" value="Guardar" class="btn btn-secondary" asp-page-handler="BtGuardar" disabled="@(Model.Plataforma == null)" />
+            </div>
+
+            @if (Model.Plataforma != null)
+            {
+                <input type="hidden" asp-for="@Model.Plataforma!.Id" />
+                <br />
+                <div>
+                    <div class="form-group">
+                        <label>Nombre Plataforma</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Plataforma!.NombrePlataforma" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo Plataforma</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Plataforma!.TipoPlataforma" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Fabricante</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Plataforma!.Fabricante" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Generacion</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Plataforma!.Generacion" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripcion</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Plataforma!.Descripcion" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha Lanzamiento</label>
+                        <div class="col-6">
+                            <input type="date" class="form-control" asp-for="@Model.Plataforma!.FechaLanzamiento" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (ViewData.ContainsKey("Mensaje"))
+            {
+                <div class="alert alert-danger mt-2">
+                    @ViewData["Mensaje"]
+                </div>
+            }
+
+            @if (Model.Plataforma != null && Model.Borrando)
+            {
+                <div class="popup">
+                    <div class="pp_ms_inner">
+                        <div style="width:95%">
+                            <h2 align="left">Mensaje</h2>
+                            <h6 align="left">¿Desea borrar la Plataforma?</h6>
+                            <h6 align="left">@Model.Plataforma!.NombrePlataforma</h6>
+                            <input type="submit" value="Cerrar" asp-page-handler="BtCerrar" class="btn btn-secondary" />
+                            <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Lista != null && Model.Lista.Count > 0)
+            {
+                <br />
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Fabricante</th>
+                        <th>Generacion</th>
+                        <th>Fecha Lanzamiento</th>
+                        <th>Acciones</th>
+                    </tr>
+                    @foreach (var elemento in Model.Lista)
+                    {
+                        <tr>
+                            <td>@elemento.Id</td>
+                            <td>@elemento.NombrePlataforma</td>
+                            <td>@elemento.TipoPlataforma</td>
+                            <td>@elemento.Fabricante</td>
+                            <td>@elemento.Generacion</td>
+                            <td>@elemento.FechaLanzamiento</td>
+                            <td>
+                                <input type="submit" value="Modificar" asp-page-handler="BtModificar" class="btn btn-warning btn-sm" asp-route-data="@elemento.Id" />
+                                <input type="submit" value="Borrar" asp-page-handler="BtBorrarVal" class="btn btn-danger btn-sm" asp-route-data="@elemento.Id" />
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </form>
+    </div>
+</center>

@@ -1,0 +1,262 @@
+﻿@page
+@model GestionJ_Razor.Pages.Ventanas.Admi.IndexModel
+@{
+    ViewData["Title"] = "Panel Administrador";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">⚙️ Panel de Administración</h2>
+
+    <h5 class="text-muted mb-3">Configuración</h5>
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/RolesHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#2c2c3e; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">🛡️</div>
+                        <h5 class="card-title mt-2">Roles</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/PermisosHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#2c2c3e; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">🔑</div>
+                        <h5 class="card-title mt-2">Permisos</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/UsuariosHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#2c2c3e; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">👤</div>
+                        <h5 class="card-title mt-2">Usuarios</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/AuditoriasHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#2c2c3e; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">📋</div>
+                        <h5 class="card-title mt-2">Auditorias</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <h5 class="text-muted mb-3">Plataformas y Hardware</h5>
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/PlataformasHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#1a3a5c; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">🎮</div>
+                        <h5 class="card-title mt-2">Plataformas</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/EmuladoresHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#1a3a5c; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">💻</div>
+                        <h5 class="card-title mt-2">Emuladores</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/PerifericosHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#1a3a5c; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">🖱️</div>
+                        <h5 class="card-title mt-2">Perifericos</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/GestorArchivosHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#1a3a5c; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">📁</div>
+                        <h5 class="card-title mt-2">Gestor Archivos</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <h5 class="text-muted mb-3">Juegos</h5>
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/VideojuegosHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#1a4a2e; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">🕹️</div>
+                        <h5 class="card-title mt-2">Videojuegos</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/RomsHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#1a4a2e; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">💾</div>
+                        <h5 class="card-title mt-2">Roms</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/LogrosHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#1a4a2e; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">🏆</div>
+                        <h5 class="card-title mt-2">Logros</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/TrucosHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#1a4a2e; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">🎯</div>
+                        <h5 class="card-title mt-2">Trucos</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <h5 class="text-muted mb-3">Actividad</h5>
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/SesionesJuegosHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#4a1a1a; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">⏱️</div>
+                        <h5 class="card-title mt-2">Sesiones</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/EstadisticasHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#4a1a1a; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">📊</div>
+                        <h5 class="card-title mt-2">Estadisticas</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/DescargasHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#4a1a1a; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">⬇️</div>
+                        <h5 class="card-title mt-2">Descargas</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/NotificacionesHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#4a1a1a; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">🔔</div>
+                        <h5 class="card-title mt-2">Notificaciones</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <h5 class="text-muted mb-3">Configuración de Sistema</h5>
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/ConfiGeneralesHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#3a2a4a; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">⚙️</div>
+                        <h5 class="card-title mt-2">Confi Generales</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/ConfiGraficasHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#3a2a4a; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">🖥️</div>
+                        <h5 class="card-title mt-2">Confi Graficas</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/ConfigAudiosHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#3a2a4a; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">🔊</div>
+                        <h5 class="card-title mt-2">Config Audios</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/GestionesHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#3a2a4a; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">📝</div>
+                        <h5 class="card-title mt-2">Gestiones</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/BibliotecaUsuariosHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#3a2a4a; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">📚</div>
+                        <h5 class="card-title mt-2">Biblioteca</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/ControlJuegosHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#3a2a4a; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">🎛️</div>
+                        <h5 class="card-title mt-2">Control Juegos</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-page="/Ventanas/Admi/GuardadoJuegosHTML" class="text-decoration-none">
+                <div class="card text-center shadow-sm h-100 border-0" style="background:#3a2a4a; color:white;">
+                    <div class="card-body">
+                        <div style="font-size:2.5rem">💿</div>
+                        <h5 class="card-title mt-2">Guardado Juegos</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

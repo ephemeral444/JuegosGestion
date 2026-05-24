@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace GestionJ_biblioteca.Entidades
 {
@@ -16,6 +17,7 @@ namespace GestionJ_biblioteca.Entidades
         public int UsuarioId { get; set; }
 
         [ForeignKey("UsuarioId")]
+        [JsonIgnore] 
         public Usuarios? _usuario { get; set; }
     }
 }

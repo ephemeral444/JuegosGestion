@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace GestionJ_biblioteca.Entidades
 {
@@ -15,7 +16,11 @@ namespace GestionJ_biblioteca.Entidades
         public string? Descripcion { get; set; }
         public DateOnly FechaLanzamiento { get; set; }
 
-        public List<Videojuegos> Videojuegos { get; set; }
-        public List<Emuladores> Emuladores { get; set; }
+        [JsonIgnore]
+        public List<Videojuegos>? Videojuegos { get; set; }
+
+        [JsonIgnore]
+        public List<Emuladores>? Emuladores { get; set; }
     }
 }
+

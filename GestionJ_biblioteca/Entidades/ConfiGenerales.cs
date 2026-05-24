@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace GestionJ_biblioteca.Entidades
 {
@@ -13,7 +14,10 @@ namespace GestionJ_biblioteca.Entidades
         public DateOnly Autoguardado {  get; set; }
         public string? Version { get; set; }
 
+        [JsonIgnore]
         public List<ConfiGraficas>? ConfiGraficas { get; set; }
+
+        [JsonIgnore]
         public List<ConfigAudios>? ConfigAudios { get; set; }
 
 
