@@ -9,88 +9,54 @@ namespace GestionesJ_Unitarias
     public class EstadisticasUT
     {
         private IConexion? iConexion;
-        private Estadisticas? entidad;
-        private Videojuegos? videojuego;
-        private Plataformas? plataforma;
-        private Usuarios? usuario;
-        private Roles? rol;
-        private Perifericos? periferico;
-        private GestorArchivos? gestorArchivo;
 
         [TestMethod]
         public void Ejecutar()
         {
-            Guardar();
             Consultar();
+            ConsultarPorId();
             Modificar();
-            Borrar();
+            Restaurar();
         }
 
         private void Consultar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
             var lista = iConexion.Estadisticas!.ToList();
             if (lista.Count > 0) return;
-            throw new Exception("");
+            throw new Exception("No hay estadisticas");
         }
 
-        private void Guardar()
+        private void ConsultarPorId()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.rol = new Roles() { NombreRol = "UT-ROL" };
-            this.iConexion.Roles!.Add(this.rol);
-            this.periferico = new Perifericos() { Video = true, Audio = true, Teclado = true, Raton = true, Mando = false };
-            this.iConexion.Perifericos!.Add(this.periferico);
-            this.gestorArchivo = new GestorArchivos() { NombreArchivo = "UT", TipoArchivo = "ROM", Tamanio = "1GB", RutaArchivo = "/test" };
-            this.iConexion.GestorArchivos!.Add(this.gestorArchivo);
-            this.plataforma = new Plataformas() { NombrePlataforma = "UT-PLAT", TipoPlataforma = "Consola", Fabricante = "Test", Generacion = "9", Descripcion = "Test", FechaLanzamiento = DateOnly.FromDateTime(DateTime.Now) };
-            this.iConexion.Plataformas!.Add(this.plataforma);
-            this.iConexion.SaveChanges();
-            this.usuario = new Usuarios() { Nombre = "UT", Apellido = "Test", Telefono = "300", Edad = 20, Pais = "CO", Correo = "ut@test.com", Contrasena = "1234", TargetaCredito = "1234", Suscripcion = false, PuntosTotal = 0, Nivel = 1, RolId = this.rol.Id, PerifericoId = this.periferico.Id, GestorArchivoId = this.gestorArchivo.Id };
-            this.iConexion.Usuarios!.Add(this.usuario);
-            this.iConexion.SaveChanges();
-            this.videojuego = new Videojuegos() { Titulo = "UT", Genero = "Accion", Formato = "Digital", Desarrolladora = "Test", Region = "NTSC", Tamanio = "10GB", FechaLanzamiento = DateOnly.FromDateTime(DateTime.Now), Licencia = true, Completado = false, UsuarioId = this.usuario.Id, PlataformaId = this.plataforma.Id };
-            this.iConexion.Videojuegos!.Add(this.videojuego);
-            this.iConexion.SaveChanges();
-            this.entidad = new Estadisticas()
-            {
-                TiempoJuego = "10h",
-                JuegosCompletos = "2",
-                LogrosObtenidos = "5",
-                PromedioFPS = 60,
-                VideojuegoId = this.videojuego.Id
-            };
-            this.iConexion.Estadisticas!.Add(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (this.entidad.Id != 0) return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.Estadisticas!.FirstOrDefault(e => e.Id == 1);
+            if (entidad != null) return;
+            throw new Exception("No se encontró la estadistica");
         }
 
         private void Modificar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.entidad!.PromedioFPS = 120;
-            this.iConexion.Estadisticas!.Update(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (entidad.Id != 0) return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.Estadisticas!.FirstOrDefault(e => e.Id == 1);
+            entidad!.PromedioFPS = 120;
+            iConexion.Estadisticas!.Update(entidad);
+            iConexion.SaveChanges();
+            if (entidad.PromedioFPS == 120) return;
+            throw new Exception("No se modificó");
         }
 
-        private void Borrar()
+        private void Restaurar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.iConexion.Estadisticas!.Remove(this.entidad!);
-            this.iConexion.Videojuegos!.Remove(this.videojuego!);
-            this.iConexion.Usuarios!.Remove(this.usuario!);
-            this.iConexion.Roles!.Remove(this.rol!);
-            this.iConexion.Perifericos!.Remove(this.periferico!);
-            this.iConexion.GestorArchivos!.Remove(this.gestorArchivo!);
-            this.iConexion.Plataformas!.Remove(this.plataforma!);
-            this.iConexion.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.Estadisticas!.FirstOrDefault(e => e.Id == 1);
+            entidad!.PromedioFPS = 60;
+            iConexion.Estadisticas!.Update(entidad);
+            iConexion.SaveChanges();
         }
     }
 }

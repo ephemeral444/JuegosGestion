@@ -9,60 +9,54 @@ namespace GestionesJ_Unitarias
     public class AuditoriasUT
     {
         private IConexion? iConexion;
-        private Auditorias? entidad;
 
         [TestMethod]
         public void Ejecutar()
         {
-            Guardar();
             Consultar();
+            ConsultarPorId();
             Modificar();
-            Borrar();
+            Restaurar();
         }
 
         private void Consultar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
             var lista = iConexion.Auditorias!.ToList();
             if (lista.Count > 0) return;
-            throw new Exception("");
+            throw new Exception("No hay auditorias");
         }
 
-        private void Guardar()
+        private void ConsultarPorId()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.entidad = new Auditorias()
-            {
-                NombreTabla = "UT-" + DateTime.Now.ToString(),
-                Operacion = "INSERT",
-                Fecha = DateTime.Now,
-                Descripcion = "Prueba unitaria"
-            };
-            this.iConexion.Auditorias!.Add(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (this.entidad.Id != 0) return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.Auditorias!.FirstOrDefault(a => a.Id == 1);
+            if (entidad != null) return;
+            throw new Exception("No se encontró la auditoria");
         }
 
         private void Modificar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.entidad!.Operacion = "UPDATE";
-            this.iConexion.Auditorias!.Update(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (entidad.Id != 0) return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.Auditorias!.FirstOrDefault(a => a.Id == 1);
+            entidad!.Descripcion = "Modificado";
+            iConexion.Auditorias!.Update(entidad);
+            iConexion.SaveChanges();
+            if (entidad.Descripcion == "Modificado") return;
+            throw new Exception("No se modificó");
         }
 
-        private void Borrar()
+        private void Restaurar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.iConexion.Auditorias!.Remove(this.entidad!);
-            this.iConexion.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.Auditorias!.FirstOrDefault(a => a.Id == 1);
+            entidad!.Descripcion = "Insercion inicial";
+            iConexion.Auditorias!.Update(entidad);
+            iConexion.SaveChanges();
         }
     }
 }

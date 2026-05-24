@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GestionesJ_Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class RolesController : ControllerBase
     {
         private RolesApli servicio = new RolesApli();
@@ -19,10 +19,10 @@ namespace GestionesJ_Api.Controllers
         [HttpPut]
         public Roles Put([FromBody] Roles entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public Roles Delete(int id)
+
+        [HttpDelete]
+        public Roles Delete(Roles entidad)
         {
-            var entidad = new Roles { Id = id };
             return servicio.Eliminar(entidad);
         }
     }

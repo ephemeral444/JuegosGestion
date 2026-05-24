@@ -6,24 +6,20 @@ namespace GestionesJ_Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class GrafiConfiController : ControllerBase
+    public class GrafiConfigController : ControllerBase
     {
         private ConfiGraficasApli servicio = new ConfiGraficasApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<ConfiGraficas> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public ConfiGraficas Post([FromBody] ConfiGraficas entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public ConfiGraficas Put([FromBody] ConfiGraficas entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public ConfiGraficas Delete(int id)
-        {
-            var entidad = new ConfiGraficas { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public ConfiGraficas Delete([FromBody] ConfiGraficas entidad) => servicio.Eliminar(entidad);
     }
 }

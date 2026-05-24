@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private TrucosApli servicio = new TrucosApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<Trucos> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public Trucos Post([FromBody] Trucos entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public Trucos Put([FromBody] Trucos entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public Trucos Delete(int id)
-        {
-            var entidad = new Trucos { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public Trucos Delete([FromBody] Trucos entidad) => servicio.Eliminar(entidad);
     }
 }

@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private EstadisticasApli servicio = new EstadisticasApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<Estadisticas> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public Estadisticas Post([FromBody] Estadisticas entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public Estadisticas Put([FromBody] Estadisticas entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public Estadisticas Delete(int id)
-        {
-            var entidad = new Estadisticas { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public Estadisticas Delete([FromBody] Estadisticas entidad) => servicio.Eliminar(entidad);
     }
 }

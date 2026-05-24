@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private LogrosApli servicio = new LogrosApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<Logros> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public Logros Post([FromBody] Logros entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public Logros Put([FromBody] Logros entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public Logros Delete(int id)
-        {
-            var entidad = new Logros { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public Logros Delete([FromBody] Logros entidad) => servicio.Eliminar(entidad);
     }
 }

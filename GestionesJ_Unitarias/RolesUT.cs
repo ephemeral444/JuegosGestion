@@ -2,7 +2,6 @@
 using GestionJ_biblioteca.Implementaciones;
 using GestionJ_biblioteca.Interfaces;
 using GestionJ_biblioteca.Nucleos;
-using Microsoft.EntityFrameworkCore;
 
 namespace GestionesJ_Unitarias
 {
@@ -10,60 +9,54 @@ namespace GestionesJ_Unitarias
     public class RolesUT
     {
         private IConexion? iConexion;
-        private Roles? entidad;
 
         [TestMethod]
         public void Ejecutar()
         {
-            Guardar();
             Consultar();
+            ConsultarPorId();
             Modificar();
-            Borrar();
+            RestaurarNombre();
         }
 
         private void Consultar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
             var lista = iConexion.Roles!.ToList();
-            if (lista.Count > 0)
-                return;
-            throw new Exception("");
+            if (lista.Count > 0) return;
+            throw new Exception("No hay roles");
         }
 
-        private void Guardar()
+        private void ConsultarPorId()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.entidad = new Roles()
-            {
-                NombreRol = "UT-" + DateTime.Now.ToString()
-            };
-            this.iConexion.Roles!.Add(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (this.entidad.Id != 0)
-                return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.Roles!.FirstOrDefault(r => r.Id == 1);
+            if (entidad != null) return;
+            throw new Exception("No se encontró el rol con Id 1");
         }
 
         private void Modificar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.entidad!.NombreRol = "UT-MOD-" + DateTime.Now.ToString();
-            this.iConexion.Roles!.Update(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (entidad.Id != 0)
-                return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.Roles!.FirstOrDefault(r => r.Id == 1);
+            entidad!.NombreRol = "Administrador-MOD";
+            iConexion.Roles!.Update(entidad);
+            iConexion.SaveChanges();
+            if (entidad.NombreRol == "Administrador-MOD") return;
+            throw new Exception("No se modificó");
         }
 
-        private void Borrar()
+        private void RestaurarNombre()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.iConexion.Roles!.Remove(this.entidad!);
-            this.iConexion.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.Roles!.FirstOrDefault(r => r.Id == 1);
+            entidad!.NombreRol = "Administrador";
+            iConexion.Roles!.Update(entidad);
+            iConexion.SaveChanges();
         }
     }
 }

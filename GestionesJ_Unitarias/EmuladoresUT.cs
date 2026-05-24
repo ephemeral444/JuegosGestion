@@ -9,68 +9,54 @@ namespace GestionesJ_Unitarias
     public class EmuladoresUT
     {
         private IConexion? iConexion;
-        private Emuladores? entidad;
-        private Plataformas? plataforma;
 
         [TestMethod]
         public void Ejecutar()
         {
-            Guardar();
             Consultar();
+            ConsultarPorNombre();
             Modificar();
-            Borrar();
+            Restaurar();
         }
 
         private void Consultar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
             var lista = iConexion.Emuladores!.ToList();
             if (lista.Count > 0) return;
-            throw new Exception("");
+            throw new Exception("No hay emuladores");
         }
 
-        private void Guardar()
+        private void ConsultarPorNombre()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-
-            this.plataforma = new Plataformas() { NombrePlataforma = "UT-PLAT", TipoPlataforma = "Consola", Fabricante = "Test", Generacion = "9", Descripcion = "Test", FechaLanzamiento = DateOnly.FromDateTime(DateTime.Now) };
-            this.iConexion.Plataformas!.Add(this.plataforma);
-            this.iConexion.SaveChanges();
-
-            this.entidad = new Emuladores()
-            {
-                Nombre = "UT-" + DateTime.Now.ToString(),
-                Version = 1.0m,
-                Bios = "BIOS-TEST",
-                RegionBios = "NTSC",
-                PlataformaId = this.plataforma.Id
-            };
-            this.iConexion.Emuladores!.Add(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (this.entidad.Id != 0) return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.Emuladores!.FirstOrDefault(e => e.Nombre == "PCSX2");
+            if (entidad != null) return;
+            throw new Exception("No se encontró el emulador");
         }
 
         private void Modificar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.entidad!.Version = 2.0m;
-            this.iConexion.Emuladores!.Update(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (entidad.Id != 0) return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.Emuladores!.FirstOrDefault(e => e.Nombre == "PCSX2");
+            entidad!.RegionBios = "NTSC-U";
+            iConexion.Emuladores!.Update(entidad);
+            iConexion.SaveChanges();
+            if (entidad.RegionBios == "NTSC-U") return;
+            throw new Exception("No se modificó");
         }
 
-        private void Borrar()
+        private void Restaurar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.iConexion.Emuladores!.Remove(this.entidad!);
-            this.iConexion.Plataformas!.Remove(this.plataforma!);
-            this.iConexion.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.Emuladores!.FirstOrDefault(e => e.Nombre == "PCSX2");
+            entidad!.RegionBios = "NTSC-J";
+            iConexion.Emuladores!.Update(entidad);
+            iConexion.SaveChanges();
         }
     }
 }

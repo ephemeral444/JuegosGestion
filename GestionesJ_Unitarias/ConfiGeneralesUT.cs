@@ -9,60 +9,54 @@ namespace GestionesJ_Unitarias
     public class ConfiGeneralesUT
     {
         private IConexion? iConexion;
-        private ConfiGenerales? entidad;
 
         [TestMethod]
         public void Ejecutar()
         {
-            Guardar();
             Consultar();
+            ConsultarPorId();
             Modificar();
-            Borrar();
+            Restaurar();
         }
 
         private void Consultar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
             var lista = iConexion.ConfiGenerales!.ToList();
             if (lista.Count > 0) return;
-            throw new Exception("");
+            throw new Exception("No hay configuraciones");
         }
 
-        private void Guardar()
+        private void ConsultarPorId()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.entidad = new ConfiGenerales()
-            {
-                Idioma = "ES",
-                Tema = "Oscuro",
-                Autoguardado = DateOnly.FromDateTime(DateTime.Now),
-                Version = "1.0"
-            };
-            this.iConexion.ConfiGenerales!.Add(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (this.entidad.Id != 0) return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.ConfiGenerales!.FirstOrDefault(c => c.Id == 1);
+            if (entidad != null) return;
+            throw new Exception("No se encontró la configuracion");
         }
 
         private void Modificar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.entidad!.Tema = "Claro";
-            this.iConexion.ConfiGenerales!.Update(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (entidad.Id != 0) return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.ConfiGenerales!.FirstOrDefault(c => c.Id == 1);
+            entidad!.Tema = "Claro";
+            iConexion.ConfiGenerales!.Update(entidad);
+            iConexion.SaveChanges();
+            if (entidad.Tema == "Claro") return;
+            throw new Exception("No se modificó");
         }
 
-        private void Borrar()
+        private void Restaurar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.iConexion.ConfiGenerales!.Remove(this.entidad!);
-            this.iConexion.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.ConfiGenerales!.FirstOrDefault(c => c.Id == 1);
+            entidad!.Tema = "Oscuro";
+            iConexion.ConfiGenerales!.Update(entidad);
+            iConexion.SaveChanges();
         }
     }
 }

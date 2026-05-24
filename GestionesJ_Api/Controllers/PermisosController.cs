@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private PermisosApli servicio = new PermisosApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<Permisos> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public Permisos Post([FromBody] Permisos entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public Permisos Put([FromBody] Permisos entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public Permisos Delete(int id)
-        {
-            var entidad = new Permisos { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public Permisos Delete([FromBody] Permisos entidad) => servicio.Eliminar(entidad);
     }
 }

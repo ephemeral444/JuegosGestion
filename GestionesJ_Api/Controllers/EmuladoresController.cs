@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private EmuladoresApli servicio = new EmuladoresApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<Emuladores> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public Emuladores Post([FromBody] Emuladores entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public Emuladores Put([FromBody] Emuladores entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public Emuladores Delete(int id)
-        {
-            var entidad = new Emuladores { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public Emuladores Delete([FromBody] Emuladores entidad) => servicio.Eliminar(entidad);
     }
 }

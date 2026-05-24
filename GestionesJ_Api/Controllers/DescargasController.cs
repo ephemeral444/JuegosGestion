@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private DescargasApli servicio = new DescargasApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<Descargas> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public Descargas Post([FromBody] Descargas entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public Descargas Put([FromBody] Descargas entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public Descargas Delete(int id)
-        {
-            var entidad = new Descargas { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public Descargas Delete([FromBody] Descargas entidad) => servicio.Eliminar(entidad);
     }
 }

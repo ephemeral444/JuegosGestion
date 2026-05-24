@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private BibliotecaUsuariosApli servicio = new BibliotecaUsuariosApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<BibliotecaUsuarios> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public BibliotecaUsuarios Post([FromBody] BibliotecaUsuarios entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public BibliotecaUsuarios Put([FromBody] BibliotecaUsuarios entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public BibliotecaUsuarios Delete(int id)
-        {
-            var entidad = new BibliotecaUsuarios { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public BibliotecaUsuarios Delete([FromBody] BibliotecaUsuarios entidad) => servicio.Eliminar(entidad);
     }
 }

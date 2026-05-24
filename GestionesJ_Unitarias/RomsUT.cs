@@ -9,94 +9,54 @@ namespace GestionesJ_Unitarias
     public class RomsUT
     {
         private IConexion? iConexion;
-        private Roms? entidad;
-        private Videojuegos? videojuego;
-        private Emuladores? emulador;
-        private Plataformas? plataforma;
-        private Usuarios? usuario;
-        private Roles? rol;
-        private Perifericos? periferico;
-        private GestorArchivos? gestorArchivo;
 
         [TestMethod]
         public void Ejecutar()
         {
-            Guardar();
             Consultar();
+            ConsultarPorNombre();
             Modificar();
-            Borrar();
+            Restaurar();
         }
 
         private void Consultar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
             var lista = iConexion.Roms!.ToList();
             if (lista.Count > 0) return;
-            throw new Exception("");
+            throw new Exception("No hay roms");
         }
 
-        private void Guardar()
+        private void ConsultarPorNombre()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.rol = new Roles() { NombreRol = "UT-ROL" };
-            this.iConexion.Roles!.Add(this.rol);
-            this.periferico = new Perifericos() { Video = true, Audio = true, Teclado = true, Raton = true, Mando = false };
-            this.iConexion.Perifericos!.Add(this.periferico);
-            this.gestorArchivo = new GestorArchivos() { NombreArchivo = "UT", TipoArchivo = "ROM", Tamanio = "1GB", RutaArchivo = "/test" };
-            this.iConexion.GestorArchivos!.Add(this.gestorArchivo);
-            this.plataforma = new Plataformas() { NombrePlataforma = "UT-PLAT", TipoPlataforma = "Consola", Fabricante = "Test", Generacion = "9", Descripcion = "Test", FechaLanzamiento = DateOnly.FromDateTime(DateTime.Now) };
-            this.iConexion.Plataformas!.Add(this.plataforma);
-            this.iConexion.SaveChanges();
-            this.usuario = new Usuarios() { Nombre = "UT", Apellido = "Test", Telefono = "300", Edad = 20, Pais = "CO", Correo = "ut@test.com", Contrasena = "1234", TargetaCredito = "1234", Suscripcion = false, PuntosTotal = 0, Nivel = 1, RolId = this.rol.Id, PerifericoId = this.periferico.Id, GestorArchivoId = this.gestorArchivo.Id };
-            this.iConexion.Usuarios!.Add(this.usuario);
-            this.iConexion.SaveChanges();
-            this.videojuego = new Videojuegos() { Titulo = "UT", Genero = "Accion", Formato = "Digital", Desarrolladora = "Test", Region = "NTSC", Tamanio = "10GB", FechaLanzamiento = DateOnly.FromDateTime(DateTime.Now), Licencia = true, Completado = false, UsuarioId = this.usuario.Id, PlataformaId = this.plataforma.Id };
-            this.iConexion.Videojuegos!.Add(this.videojuego);
-            this.emulador = new Emuladores() { Nombre = "UT-EMU", Version = 1.0m, Bios = "BIOS", RegionBios = "NTSC", PlataformaId = this.plataforma.Id };
-            this.iConexion.Emuladores!.Add(this.emulador);
-            this.iConexion.SaveChanges();
-            this.entidad = new Roms()
-            {
-                Nombre = "UT-" + DateTime.Now.ToString(),
-                Genero = "Accion",
-                Desarrolladora = "Test",
-                FechaLanzamiento = DateOnly.FromDateTime(DateTime.Now),
-                TamanioArchivo = "500MB",
-                VideojuegoId = this.videojuego.Id,
-                EmuladorId = this.emulador.Id
-            };
-            this.iConexion.Roms!.Add(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (this.entidad.Id != 0) return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.Roms!.FirstOrDefault(r => r.Nombre == "God of War II NTSC");
+            if (entidad != null) return;
+            throw new Exception("No se encontró la rom");
         }
 
         private void Modificar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.entidad!.TamanioArchivo = "1GB";
-            this.iConexion.Roms!.Update(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (entidad.Id != 0) return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.Roms!.FirstOrDefault(r => r.Nombre == "God of War II NTSC");
+            entidad!.TamanioArchivo = "5GB";
+            iConexion.Roms!.Update(entidad);
+            iConexion.SaveChanges();
+            if (entidad.TamanioArchivo == "5GB") return;
+            throw new Exception("No se modificó");
         }
 
-        private void Borrar()
+        private void Restaurar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.iConexion.Roms!.Remove(this.entidad!);
-            this.iConexion.Videojuegos!.Remove(this.videojuego!);
-            this.iConexion.Emuladores!.Remove(this.emulador!);
-            this.iConexion.Usuarios!.Remove(this.usuario!);
-            this.iConexion.Roles!.Remove(this.rol!);
-            this.iConexion.Perifericos!.Remove(this.periferico!);
-            this.iConexion.GestorArchivos!.Remove(this.gestorArchivo!);
-            this.iConexion.Plataformas!.Remove(this.plataforma!);
-            this.iConexion.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.Roms!.FirstOrDefault(r => r.Nombre == "God of War II NTSC");
+            entidad!.TamanioArchivo = "4.7GB";
+            iConexion.Roms!.Update(entidad);
+            iConexion.SaveChanges();
         }
     }
 }

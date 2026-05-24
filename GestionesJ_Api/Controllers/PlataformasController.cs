@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private PlataformasApli servicio = new PlataformasApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<Plataformas> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public Plataformas Post([FromBody] Plataformas entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public Plataformas Put([FromBody] Plataformas entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public Plataformas Delete(int id)
-        {
-            var entidad = new Plataformas { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public Plataformas Delete([FromBody] Plataformas entidad) => servicio.Eliminar(entidad);
     }
 }

@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private GuardadoJuegosApli servicio = new GuardadoJuegosApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<GuardadoJuegos> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public GuardadoJuegos Post([FromBody] GuardadoJuegos entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public GuardadoJuegos Put([FromBody] GuardadoJuegos entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public GuardadoJuegos Delete(int id)
-        {
-            var entidad = new GuardadoJuegos { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public GuardadoJuegos Delete([FromBody] GuardadoJuegos entidad) => servicio.Eliminar(entidad);
     }
 }

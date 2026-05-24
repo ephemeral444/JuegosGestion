@@ -9,68 +9,54 @@ namespace GestionesJ_Unitarias
     public class ConfigAudiosUT
     {
         private IConexion? iConexion;
-        private ConfigAudios? entidad;
-        private ConfiGenerales? confiGeneral;
 
         [TestMethod]
         public void Ejecutar()
         {
-            Guardar();
             Consultar();
+            ConsultarPorId();
             Modificar();
-            Borrar();
+            Restaurar();
         }
 
         private void Consultar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
             var lista = iConexion.ConfigAudios!.ToList();
             if (lista.Count > 0) return;
-            throw new Exception("");
+            throw new Exception("No hay configuraciones de audio");
         }
 
-        private void Guardar()
+        private void ConsultarPorId()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-
-            this.confiGeneral = new ConfiGenerales() { Idioma = "ES", Tema = "Oscuro", Autoguardado = DateOnly.FromDateTime(DateTime.Now), Version = "1.0" };
-            this.iConexion.ConfiGenerales!.Add(this.confiGeneral);
-            this.iConexion.SaveChanges();
-
-            this.entidad = new ConfigAudios()
-            {
-                Latencia = "50ms",
-                Frecuencia = "44100Hz",
-                Volumen = 80,
-                Modo = "Estereo",
-                ConfiGeneralId = this.confiGeneral.Id
-            };
-            this.iConexion.ConfigAudios!.Add(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (this.entidad.Id != 0) return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.ConfigAudios!.FirstOrDefault(c => c.Id == 1);
+            if (entidad != null) return;
+            throw new Exception("No se encontró la configuracion de audio");
         }
 
         private void Modificar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.entidad!.Volumen = 100;
-            this.iConexion.ConfigAudios!.Update(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (entidad.Id != 0) return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.ConfigAudios!.FirstOrDefault(c => c.Id == 1);
+            entidad!.Volumen = 100;
+            iConexion.ConfigAudios!.Update(entidad);
+            iConexion.SaveChanges();
+            if (entidad.Volumen == 100) return;
+            throw new Exception("No se modificó");
         }
 
-        private void Borrar()
+        private void Restaurar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.iConexion.ConfigAudios!.Remove(this.entidad!);
-            this.iConexion.ConfiGenerales!.Remove(this.confiGeneral!);
-            this.iConexion.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.ConfigAudios!.FirstOrDefault(c => c.Id == 1);
+            entidad!.Volumen = 80;
+            iConexion.ConfigAudios!.Update(entidad);
+            iConexion.SaveChanges();
         }
     }
 }

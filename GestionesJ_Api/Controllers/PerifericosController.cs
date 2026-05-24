@@ -1,5 +1,5 @@
 ﻿using GestionJ_biblioteca.Entidades;
-using GestionJ_biblioteca.Implementaciones;   
+using GestionJ_biblioteca.Implementaciones;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestionesJ_Api.Controllers
@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private PerifericosApli servicio = new PerifericosApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<Perifericos> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public Perifericos Post([FromBody] Perifericos entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public Perifericos Put([FromBody] Perifericos entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public Perifericos Delete(int id)
-        {
-            var entidad = new Perifericos { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public Perifericos Delete([FromBody] Perifericos entidad) => servicio.Eliminar(entidad);
     }
 }

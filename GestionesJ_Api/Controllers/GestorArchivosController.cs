@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private GestorArchivosApli servicio = new GestorArchivosApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<GestorArchivos> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public GestorArchivos Post([FromBody] GestorArchivos entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public GestorArchivos Put([FromBody] GestorArchivos entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public GestorArchivos Delete(int id)
-        {
-            var entidad = new GestorArchivos { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public GestorArchivos Delete([FromBody] GestorArchivos entidad) => servicio.Eliminar(entidad);
     }
 }

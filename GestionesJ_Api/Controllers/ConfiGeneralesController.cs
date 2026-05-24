@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private ConfiGeneralesApli servicio = new ConfiGeneralesApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<ConfiGenerales> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public ConfiGenerales Post([FromBody] ConfiGenerales entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public ConfiGenerales Put([FromBody] ConfiGenerales entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public ConfiGenerales Delete(int id)
-        {
-            var entidad = new ConfiGenerales { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public ConfiGenerales Delete([FromBody] ConfiGenerales entidad) => servicio.Eliminar(entidad);
     }
 }

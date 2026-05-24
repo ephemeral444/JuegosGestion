@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private ConfigAudiosApli servicio = new ConfigAudiosApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<ConfigAudios> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public ConfigAudios Post([FromBody] ConfigAudios entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public ConfigAudios Put([FromBody] ConfigAudios entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public ConfigAudios Delete(int id)
-        {
-            var entidad = new ConfigAudios { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public ConfigAudios Delete([FromBody] ConfigAudios entidad) => servicio.Eliminar(entidad);
     }
 }

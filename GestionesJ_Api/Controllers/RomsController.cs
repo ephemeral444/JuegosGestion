@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private RomsApli servicio = new RomsApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<Roms> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public Roms Post([FromBody] Roms entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public Roms Put([FromBody] Roms entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public Roms Delete(int id)
-        {
-            var entidad = new Roms { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public Roms Delete([FromBody] Roms entidad) => servicio.Eliminar(entidad);
     }
 }

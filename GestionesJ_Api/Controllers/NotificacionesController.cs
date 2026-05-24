@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private NotificacionesApli servicio = new NotificacionesApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<Notificaciones> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public Notificaciones Post([FromBody] Notificaciones entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public Notificaciones Put([FromBody] Notificaciones entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public Notificaciones Delete(int id)
-        {
-            var entidad = new Notificaciones { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public Notificaciones Delete([FromBody] Notificaciones entidad) => servicio.Eliminar(entidad);
     }
 }

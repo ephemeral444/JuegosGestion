@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private GestionesApli servicio = new GestionesApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<Gestiones> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public Gestiones Post([FromBody] Gestiones entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public Gestiones Put([FromBody] Gestiones entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public Gestiones Delete(int id)
-        {
-            var entidad = new Gestiones { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public Gestiones Delete([FromBody] Gestiones entidad) => servicio.Eliminar(entidad);
     }
 }

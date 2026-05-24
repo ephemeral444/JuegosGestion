@@ -10,20 +10,16 @@ namespace GestionesJ_Api.Controllers
     {
         private ControlJuegosApli servicio = new ControlJuegosApli();
 
-        [HttpGet]
+        [HttpGet("Get")]
         public List<ControlJuegos> Get() => servicio.Consultar();
 
-        [HttpPost]
+        [HttpPost("Post")]
         public ControlJuegos Post([FromBody] ControlJuegos entidad) => servicio.Guardar(entidad);
 
-        [HttpPut]
+        [HttpPut("Put")]
         public ControlJuegos Put([FromBody] ControlJuegos entidad) => servicio.Modificar(entidad);
 
-        [HttpDelete("{id}")]
-        public ControlJuegos Delete(int id)
-        {
-            var entidad = new ControlJuegos { Id = id };
-            return servicio.Eliminar(entidad);
-        }
+        [HttpDelete("Delete")]
+        public ControlJuegos Delete([FromBody] ControlJuegos entidad) => servicio.Eliminar(entidad);
     }
 }

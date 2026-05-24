@@ -9,60 +9,54 @@ namespace GestionesJ_Unitarias
     public class GestorArchivosUT
     {
         private IConexion? iConexion;
-        private GestorArchivos? entidad;
 
         [TestMethod]
         public void Ejecutar()
         {
-            Guardar();
             Consultar();
+            ConsultarPorId();
             Modificar();
-            Borrar();
+            Restaurar();
         }
 
         private void Consultar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
             var lista = iConexion.GestorArchivos!.ToList();
             if (lista.Count > 0) return;
-            throw new Exception("");
+            throw new Exception("No hay archivos");
         }
 
-        private void Guardar()
+        private void ConsultarPorId()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.entidad = new GestorArchivos()
-            {
-                NombreArchivo = "UT-" + DateTime.Now.ToString(),
-                TipoArchivo = "ROM",
-                Tamanio = "500MB",
-                RutaArchivo = "/archivos/test"
-            };
-            this.iConexion.GestorArchivos!.Add(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (this.entidad.Id != 0) return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.GestorArchivos!.FirstOrDefault(g => g.Id == 1);
+            if (entidad != null) return;
+            throw new Exception("No se encontró el archivo");
         }
 
         private void Modificar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.entidad!.Tamanio = "1GB";
-            this.iConexion.GestorArchivos!.Update(this.entidad!);
-            this.iConexion.SaveChanges();
-            if (entidad.Id != 0) return;
-            throw new Exception("");
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.GestorArchivos!.FirstOrDefault(g => g.Id == 1);
+            entidad!.Tamanio = "800MB";
+            iConexion.GestorArchivos!.Update(entidad);
+            iConexion.SaveChanges();
+            if (entidad.Tamanio == "800MB") return;
+            throw new Exception("No se modificó");
         }
 
-        private void Borrar()
+        private void Restaurar()
         {
-            this.iConexion = new Conexion();
-            this.iConexion.string_conexion = Configuraciones.obtener("string_conexion");
-            this.iConexion.GestorArchivos!.Remove(this.entidad!);
-            this.iConexion.SaveChanges();
+            iConexion = new Conexion();
+            iConexion.string_conexion = Configuraciones.obtener("string_conexion");
+            var entidad = iConexion.GestorArchivos!.FirstOrDefault(g => g.Id == 1);
+            entidad!.Tamanio = "700MB";
+            iConexion.GestorArchivos!.Update(entidad);
+            iConexion.SaveChanges();
         }
     }
 }

@@ -407,3 +407,4 @@ INSERT INTO Descargas (Servidor, VelocidadMB, EstadoDescarga, FechaInstalacion, 
 ('Server-CO-1', '10MB/s', 'Completada', '2024-01-10', 1, 1),
 ('Server-CO-2', '5MB/s', 'Completada', '2024-02-15', 2, 2),
 ('Server-MX-1', '8MB/s', 'Activa', '2024-03-05', 3, 3);
+

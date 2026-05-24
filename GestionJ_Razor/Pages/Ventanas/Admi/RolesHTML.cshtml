@@ -1,0 +1,109 @@
+﻿@* Pages/Ventanas/RolesHTML.cshtml *@
+@page
+@model GestionJ_Razor.Pages.Ventanas.RolesHTMLModel
+@{
+    ViewData["Title"] = "Roles";
+}
+
+<center>
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div align="left">
+                <h3>Roles</h3>
+            </div>
+
+            <div>
+                <input type="submit"
+                       value="Refrescar"
+                       class="btn btn-secondary"
+                       asp-page-handler="BtRefrescar" />
+                <input type="submit"
+                       value="Nuevo"
+                       class="btn btn-secondary"
+                       asp-page-handler="BtNuevo"
+                       disabled="@(Model.Rol != null)" />
+                <input type="submit"
+                       value="Guardar"
+                       class="btn btn-secondary"
+                       asp-page-handler="BtGuardar"
+                       disabled="@(Model.Rol == null)" />
+            </div>
+
+            @if (Model.Rol != null)
+            {
+                <input type="hidden" asp-for="@Model.Rol!.Id" />
+                <br />
+                <div>
+                    <div class="form-group">
+                        <label>Nombre Rol</label>
+                        <div class="col-6">
+                            <input class="form-control"
+                                   asp-for="@Model.Rol!.NombreRol" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (ViewData.ContainsKey("Mensaje"))
+            {
+                <div class="alert alert-danger mt-2">
+                    @ViewData["Mensaje"]
+                </div>
+            }
+
+            @if (Model.Rol != null && Model.Borrando)
+            {
+                <div class="popup">
+                    <div class="pp_ms_inner">
+                        <div style="width:95%">
+                            <h2 align="left">Mensaje</h2>
+                            <h6 align="left">¿Desea borrar el Rol?</h6>
+                            <h6 align="left">@Model.Rol!.NombreRol</h6>
+                            <input type="submit"
+                                   value="Cerrar"
+                                   asp-page-handler="BtCerrar"
+                                   class="btn btn-secondary" />
+                            <input type="submit"
+                                   value="Borrar"
+                                   asp-page-handler="BtBorrar"
+                                   class="btn btn-danger" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Lista != null && Model.Lista.Count > 0)
+            {
+                <br />
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre Rol</th>
+                        <th>Acciones</th>
+                    </tr>
+                    @foreach (var elemento in Model.Lista)
+                    {
+                        <tr>
+                            <td>@elemento.Id</td>
+                            <td>@elemento.NombreRol</td>
+                            <td>
+                                <input type="submit"
+                                       value="Modificar"
+                                       asp-page-handler="BtModificar"
+                                       class="btn btn-warning btn-sm"
+                                       asp-route-data="@elemento.Id" />
+                                <input type="submit"
+                                       value="Borrar"
+                                       asp-page-handler="BtBorrarVal"
+                                       class="btn btn-danger btn-sm"
+                                       asp-route-data="@elemento.Id" />
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </form>
+    </div>
+</center>
