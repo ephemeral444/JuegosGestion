@@ -1,0 +1,39 @@
+﻿@* Pages/Ventanas/Admi/BibliotecaUsuariosHTML.cshtml *@
+@page
+@model GestionJ_Razor.Pages.Ventanas.Admi.BibliotecaUsuariosHTMLModel
+@{ ViewData["Title"] = "Biblioteca Usuarios"; }
+<center><div><form method="POST" enctype="multipart/form-data">
+@Html.AntiForgeryToken()
+<div align="left"><h3>Biblioteca Usuarios</h3></div>
+<div>
+    <input type="submit" value="Refrescar" class="btn btn-secondary" asp-page-handler="BtRefrescar" />
+    <input type="submit" value="Nuevo" class="btn btn-secondary" asp-page-handler="BtNuevo" disabled="@(Model.Biblioteca != null)" />
+    <input type="submit" value="Guardar" class="btn btn-secondary" asp-page-handler="BtGuardar" disabled="@(Model.Biblioteca == null)" />
+</div>
+@if (Model.Biblioteca != null)
+{
+    <input type="hidden" asp-for="@Model.Biblioteca!.Id" /><br />
+    <div class="form-group"><label>Fecha Registro</label><div class="col-6"><input type="date" class="form-control" asp-for="@Model.Biblioteca!.FechaRegistro" /></div></div>
+    <div class="form-group"><label>Favoritos</label><div class="col-6"><input class="form-control" asp-for="@Model.Biblioteca!.Favoritos" /></div></div>
+    <div class="form-group"><label>Horas Jugadas</label><div class="col-6"><input class="form-control" asp-for="@Model.Biblioteca!.HorasJugadas" /></div></div>
+    <div class="form-group"><label>Usuario</label><div class="col-6"><select class="form-control" asp-for="@Model.Biblioteca!.UsuarioId">@if (Model.ListaUsuarios != null) { @foreach (var u in Model.ListaUsuarios) { <option value="@u.Id">@u.Nombre @u.Apellido</option> } }</select></div></div>
+}
+@if (ViewData.ContainsKey("Mensaje")) { <div class="alert alert-danger mt-2">@ViewData["Mensaje"]</div> }
+@if (Model.Biblioteca != null && Model.Borrando)
+{
+    <div class="popup"><div class="pp_ms_inner"><div style="width:95%"><h2 align="left">Mensaje</h2><h6 align="left">¿Desea borrar la Biblioteca?</h6><h6 align="left">@Model.Biblioteca!.Favoritos</h6>
+    <input type="submit" value="Cerrar" asp-page-handler="BtCerrar" class="btn btn-secondary" />
+    <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger" /></div></div></div>
+}
+@if (Model.Lista != null && Model.Lista.Count > 0)
+{
+    <br /><table class="table table-striped table-bordered table-hover">
+    <tr><th>Id</th><th>Fecha Registro</th><th>Favoritos</th><th>Horas Jugadas</th><th>Acciones</th></tr>
+    @foreach (var e in Model.Lista) {
+        <tr><td>@e.Id</td><td>@e.FechaRegistro</td><td>@e.Favoritos</td><td>@e.HorasJugadas</td>
+        <td><input type="submit" value="Modificar" asp-page-handler="BtModificar" class="btn btn-warning btn-sm" asp-route-data="@e.Id" />
+        <input type="submit" value="Borrar" asp-page-handler="BtBorrarVal" class="btn btn-danger btn-sm" asp-route-data="@e.Id" /></td></tr>
+    }
+    </table>
+}
+</form></div></center>

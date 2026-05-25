@@ -16,7 +16,6 @@ namespace GestionJ_biblioteca.Entidades
 
         [JsonIgnore]
         public List<ConfiGraficas>? ConfiGraficas { get; set; }
-
         [JsonIgnore]
         public List<ConfigAudios>? ConfigAudios { get; set; }
 

@@ -1,0 +1,41 @@
+﻿@* Pages/Ventanas/Admi/GuardadoJuegosHTML.cshtml *@
+@page
+@model GestionJ_Razor.Pages.Ventanas.Admi.GuardadoJuegosHTMLModel
+@{ ViewData["Title"] = "Guardado Juegos"; }
+<center><div><form method="POST" enctype="multipart/form-data">
+@Html.AntiForgeryToken()
+<div align="left"><h3>Guardado Juegos</h3></div>
+<div>
+    <input type="submit" value="Refrescar" class="btn btn-secondary" asp-page-handler="BtRefrescar" />
+    <input type="submit" value="Nuevo" class="btn btn-secondary" asp-page-handler="BtNuevo" disabled="@(Model.Guardado != null)" />
+    <input type="submit" value="Guardar" class="btn btn-secondary" asp-page-handler="BtGuardar" disabled="@(Model.Guardado == null)" />
+</div>
+@if (Model.Guardado != null)
+{
+    <input type="hidden" asp-for="@Model.Guardado!.Id" /><br />
+    <div class="form-group"><label>Fecha Guardado</label><div class="col-6"><input type="date" class="form-control" asp-for="@Model.Guardado!.FechaGuardado" /></div></div>
+    <div class="form-group"><label>Proceso</label><div class="col-6"><input class="form-control" asp-for="@Model.Guardado!.Proceso" /></div></div>
+    <div class="form-group"><label>Ubicacion</label><div class="col-6"><input class="form-control" asp-for="@Model.Guardado!.Ubicacion" /></div></div>
+    <div class="form-group"><label>Horas Jugadas</label><div class="col-6"><input class="form-control" asp-for="@Model.Guardado!.HorasJugadas" /></div></div>
+    <div class="form-group"><label>Usuario</label><div class="col-6"><select class="form-control" asp-for="@Model.Guardado!.UsuarioId">@if (Model.ListaUsuarios != null) { @foreach (var u in Model.ListaUsuarios) { <option value="@u.Id">@u.Nombre @u.Apellido</option> } }</select></div></div>
+    <div class="form-group"><label>Videojuego</label><div class="col-6"><select class="form-control" asp-for="@Model.Guardado!.VideojuegoId">@if (Model.ListaVideojuegos != null) { @foreach (var v in Model.ListaVideojuegos) { <option value="@v.Id">@v.Titulo</option> } }</select></div></div>
+}
+@if (ViewData.ContainsKey("Mensaje")) { <div class="alert alert-danger mt-2">@ViewData["Mensaje"]</div> }
+@if (Model.Guardado != null && Model.Borrando)
+{
+    <div class="popup"><div class="pp_ms_inner"><div style="width:95%"><h2 align="left">Mensaje</h2><h6 align="left">¿Desea borrar el Guardado?</h6><h6 align="left">@Model.Guardado!.Proceso</h6>
+    <input type="submit" value="Cerrar" asp-page-handler="BtCerrar" class="btn btn-secondary" />
+    <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger" /></div></div></div>
+}
+@if (Model.Lista != null && Model.Lista.Count > 0)
+{
+    <br /><table class="table table-striped table-bordered table-hover">
+    <tr><th>Id</th><th>Fecha Guardado</th><th>Proceso</th><th>Horas Jugadas</th><th>Acciones</th></tr>
+    @foreach (var e in Model.Lista) {
+        <tr><td>@e.Id</td><td>@e.FechaGuardado</td><td>@e.Proceso</td><td>@e.HorasJugadas</td>
+        <td><input type="submit" value="Modificar" asp-page-handler="BtModificar" class="btn btn-warning btn-sm" asp-route-data="@e.Id" />
+        <input type="submit" value="Borrar" asp-page-handler="BtBorrarVal" class="btn btn-danger btn-sm" asp-route-data="@e.Id" /></td></tr>
+    }
+    </table>
+}
+</form></div></center>

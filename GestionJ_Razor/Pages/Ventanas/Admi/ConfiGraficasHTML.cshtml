@@ -1,0 +1,40 @@
+﻿@* Pages/Ventanas/Admi/ConfiGraficasHTML.cshtml *@
+@page
+@model GestionJ_Razor.Pages.Ventanas.Admi.ConfiGraficasHTMLModel
+@{ ViewData["Title"] = "Confi Graficas"; }
+<center><div><form method="POST" enctype="multipart/form-data">
+@Html.AntiForgeryToken()
+<div align="left"><h3>Configuraciones Graficas</h3></div>
+<div>
+    <input type="submit" value="Refrescar" class="btn btn-secondary" asp-page-handler="BtRefrescar" />
+    <input type="submit" value="Nuevo" class="btn btn-secondary" asp-page-handler="BtNuevo" disabled="@(Model.ConfiGrafica != null)" />
+    <input type="submit" value="Guardar" class="btn btn-secondary" asp-page-handler="BtGuardar" disabled="@(Model.ConfiGrafica == null)" />
+</div>
+@if (Model.ConfiGrafica != null)
+{
+    <input type="hidden" asp-for="@Model.ConfiGrafica!.Id" /><br />
+    <div class="form-group"><label>Resolucion</label><div class="col-6"><input class="form-control" asp-for="@Model.ConfiGrafica!.Resolucion" /></div></div>
+    <div class="form-group"><label>Filtros</label><div class="col-6"><input class="form-control" asp-for="@Model.ConfiGrafica!.Filtros" /></div></div>
+    <div class="form-group"><label>Shaders</label><div class="col-6"><input class="form-control" asp-for="@Model.ConfiGrafica!.Shaders" /></div></div>
+    <div class="form-group"><label>Vsync</label><div class="col-6"><input type="checkbox" asp-for="@Model.ConfiGrafica!.Vsync" /></div></div>
+    <div class="form-group"><label>Confi General</label><div class="col-6"><select class="form-control" asp-for="@Model.ConfiGrafica!.ConfiGeneralId">@if (Model.ListaConfiGenerales != null) { @foreach (var c in Model.ListaConfiGenerales) { <option value="@c.Id">@c.Version - @c.Idioma</option> } }</select></div></div>
+}
+@if (ViewData.ContainsKey("Mensaje")) { <div class="alert alert-danger mt-2">@ViewData["Mensaje"]</div> }
+@if (Model.ConfiGrafica != null && Model.Borrando)
+{
+    <div class="popup"><div class="pp_ms_inner"><div style="width:95%"><h2 align="left">Mensaje</h2><h6 align="left">¿Desea borrar la Confi Grafica?</h6><h6 align="left">@Model.ConfiGrafica!.Resolucion</h6>
+    <input type="submit" value="Cerrar" asp-page-handler="BtCerrar" class="btn btn-secondary" />
+    <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger" /></div></div></div>
+}
+@if (Model.Lista != null && Model.Lista.Count > 0)
+{
+    <br /><table class="table table-striped table-bordered table-hover">
+    <tr><th>Id</th><th>Resolucion</th><th>Filtros</th><th>Shaders</th><th>Vsync</th><th>Acciones</th></tr>
+    @foreach (var e in Model.Lista) {
+        <tr><td>@e.Id</td><td>@e.Resolucion</td><td>@e.Filtros</td><td>@e.Shaders</td><td>@(e.Vsync ? "✔" : "✘")</td>
+        <td><input type="submit" value="Modificar" asp-page-handler="BtModificar" class="btn btn-warning btn-sm" asp-route-data="@e.Id" />
+        <input type="submit" value="Borrar" asp-page-handler="BtBorrarVal" class="btn btn-danger btn-sm" asp-route-data="@e.Id" /></td></tr>
+    }
+    </table>
+}
+</form></div></center>
