@@ -6,7 +6,7 @@ namespace GestionesJ_Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AudioConfigController : ControllerBase
+    public class ConfigAudiosController : ControllerBase
     {
         private ConfigAudiosApli servicio = new ConfigAudiosApli();
 

@@ -5,14 +5,14 @@ using Newtonsoft.Json;
 
 namespace Presentaciones_biblioteca.Implementaciones
 {
-    public class ConfiGenerales_Presentacion : IConfiGenerales_Presentacion
+    public class Auditorias_Presentacion : IAuditorias_Presentacion
     {
         private IComunicaciones? iComunicaciones;
 
-        public List<ConfiGenerales> Consultar()
+        public List<Auditorias> Consultar()
         {
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5031/api/ConfiGenerales/Get";
+            datos["Url"] = "http://localhost:5031/api/Auditorias/Get";
 
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.Ejecutar(datos)!;
@@ -20,13 +20,13 @@ namespace Presentaciones_biblioteca.Implementaciones
             var respuesta = task.Result;
 
             if (!respuesta.ContainsKey("Valor"))
-                return new List<ConfiGenerales>();
+                return new List<Auditorias>();
 
-            return JsonConvert.DeserializeObject<List<ConfiGenerales>>(
+            return JsonConvert.DeserializeObject<List<Auditorias>>(
                 respuesta["Valor"].ToString()!)!;
         }
 
-        public ConfiGenerales Guardar(ConfiGenerales entidad)
+        public Auditorias Guardar(Auditorias entidad)
         {
             if (entidad.Id != 0)
                 throw new Exception("Ya se guardo");
@@ -34,7 +34,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5031/api/ConfiGenerales/Post";
+            datos["Url"] = "http://localhost:5031/api/Auditorias/Post";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarPost(datos)!;
@@ -42,13 +42,13 @@ namespace Presentaciones_biblioteca.Implementaciones
             var respuesta = task.Result;
 
             if (!respuesta.ContainsKey("Valor"))
-                return new ConfiGenerales();
+                return new Auditorias();
 
-            return JsonConvert.DeserializeObject<ConfiGenerales>(
+            return JsonConvert.DeserializeObject<Auditorias>(
                 respuesta["Valor"].ToString()!)!;
         }
 
-        public ConfiGenerales Modificar(ConfiGenerales entidad)
+        public Auditorias Modificar(Auditorias entidad)
         {
             if (entidad.Id == 0)
                 throw new Exception("No se ha guardado");
@@ -56,7 +56,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5031/api/ConfiGenerales/Put";
+            datos["Url"] = "http://localhost:5031/api/Auditorias/Put";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarPut(datos)!;
@@ -64,13 +64,13 @@ namespace Presentaciones_biblioteca.Implementaciones
             var respuesta = task.Result;
 
             if (!respuesta.ContainsKey("Valor"))
-                return new ConfiGenerales();
+                return new Auditorias();
 
-            return JsonConvert.DeserializeObject<ConfiGenerales>(
+            return JsonConvert.DeserializeObject<Auditorias>(
                 respuesta["Valor"].ToString()!)!;
         }
 
-        public ConfiGenerales Eliminar(ConfiGenerales entidad)
+        public Auditorias Eliminar(Auditorias entidad)
         {
             if (entidad.Id == 0)
                 throw new Exception("No se ha guardado");
@@ -78,7 +78,7 @@ namespace Presentaciones_biblioteca.Implementaciones
             this.iComunicaciones = new Comunicaciones();
 
             var datos = new Dictionary<string, object>();
-            datos["Url"] = "http://localhost:5031/api/ConfiGenerales/Delete";
+            datos["Url"] = "http://localhost:5031/api/Auditorias/Delete";
             datos["Entidad"] = entidad;
             this.iComunicaciones = new Comunicaciones();
             var task = this.iComunicaciones.EjecutarDelete(datos)!;
@@ -86,9 +86,9 @@ namespace Presentaciones_biblioteca.Implementaciones
             var respuesta = task.Result;
 
             if (!respuesta.ContainsKey("Valor"))
-                return new ConfiGenerales();
+                return new Auditorias();
 
-            return JsonConvert.DeserializeObject<ConfiGenerales>(
+            return JsonConvert.DeserializeObject<Auditorias>(
                 respuesta["Valor"].ToString()!)!;
         }
     }

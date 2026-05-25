@@ -17,7 +17,7 @@ namespace GestionJ_biblioteca.Entidades
         public int ConfiGeneralId { get; set; }
 
         [ForeignKey("ConfiGeneralId")]
-        [JsonIgnore] 
+        [JsonIgnore]
         public ConfiGenerales? _confiGeneral { get; set; }
 
     }

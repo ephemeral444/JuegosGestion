@@ -1,0 +1,56 @@
+﻿@* Pages/Ventanas/Admi/AuditoriasHTML.cshtml *@
+@page
+@model GestionJ_Razor.Pages.Ventanas.Admi.AuditoriasHTMLModel
+@{
+    ViewData["Title"] = "Auditorias";
+}
+
+<center>
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div align="left">
+                <h3>Auditorias</h3>
+            </div>
+
+            <div>
+                <input type="submit"
+                       value="Refrescar"
+                       class="btn btn-secondary"
+                       asp-page-handler="BtRefrescar" />
+            </div>
+
+            @if (ViewData.ContainsKey("Mensaje"))
+            {
+                <div class="alert alert-danger mt-2">
+                    @ViewData["Mensaje"]
+                </div>
+            }
+
+            @if (Model.Lista != null && Model.Lista.Count > 0)
+            {
+                <br />
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Id</th>
+                        <th>Tabla</th>
+                        <th>Operacion</th>
+                        <th>Fecha</th>
+                        <th>Descripcion</th>
+                    </tr>
+                    @foreach (var elemento in Model.Lista)
+                    {
+                        <tr>
+                            <td>@elemento.Id</td>
+                            <td>@elemento.NombreTabla</td>
+                            <td>@elemento.Operacion</td>
+                            <td>@elemento.Fecha</td>
+                            <td>@elemento.Descripcion</td>
+                        </tr>
+                    }
+                </table>
+            }
+        </form>
+    </div>
+</center>
