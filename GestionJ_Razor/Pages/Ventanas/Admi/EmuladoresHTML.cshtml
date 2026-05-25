@@ -1,0 +1,121 @@
+﻿@* Pages/Ventanas/Admi/EmuladoresHTML.cshtml *@
+@page
+@model GestionJ_Razor.Pages.Ventanas.Admi.EmuladoresHTMLModel
+@{
+    ViewData["Title"] = "Emuladores";
+}
+
+<center>
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div align="left">
+                <h3>Emuladores</h3>
+            </div>
+
+            <div>
+                <input type="submit" value="Refrescar" class="btn btn-secondary" asp-page-handler="BtRefrescar" />
+                <input type="submit" value="Nuevo" class="btn btn-secondary" asp-page-handler="BtNuevo" disabled="@(Model.Emulador != null)" />
+                <input type="submit" value="Guardar" class="btn btn-secondary" asp-page-handler="BtGuardar" disabled="@(Model.Emulador == null)" />
+            </div>
+
+            @if (Model.Emulador != null)
+            {
+                <input type="hidden" asp-for="@Model.Emulador!.Id" />
+                <br />
+                <div>
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Emulador!.Nombre" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Version</label>
+                        <div class="col-6">
+                            <input type="number" step="0.01" class="form-control" asp-for="@Model.Emulador!.Version" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Bios</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Emulador!.Bios" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Region Bios</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Emulador!.RegionBios" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Plataforma</label>
+                        <div class="col-6">
+                            <select class="form-control" asp-for="@Model.Emulador!.PlataformaId">
+                                @if (Model.ListaPlataformas != null)
+                                {
+                                    @foreach (var p in Model.ListaPlataformas)
+                                    {
+                                        <option value="@p.Id">@p.NombrePlataforma</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (ViewData.ContainsKey("Mensaje"))
+            {
+                <div class="alert alert-danger mt-2">
+                    @ViewData["Mensaje"]
+                </div>
+            }
+
+            @if (Model.Emulador != null && Model.Borrando)
+            {
+                <div class="popup">
+                    <div class="pp_ms_inner">
+                        <div style="width:95%">
+                            <h2 align="left">Mensaje</h2>
+                            <h6 align="left">¿Desea borrar el Emulador?</h6>
+                            <h6 align="left">@Model.Emulador!.Nombre</h6>
+                            <input type="submit" value="Cerrar" asp-page-handler="BtCerrar" class="btn btn-secondary" />
+                            <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Lista != null && Model.Lista.Count > 0)
+            {
+                <br />
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Version</th>
+                        <th>Bios</th>
+                        <th>Region Bios</th>
+                        <th>Acciones</th>
+                    </tr>
+                    @foreach (var elemento in Model.Lista)
+                    {
+                        <tr>
+                            <td>@elemento.Id</td>
+                            <td>@elemento.Nombre</td>
+                            <td>@elemento.Version</td>
+                            <td>@elemento.Bios</td>
+                            <td>@elemento.RegionBios</td>
+                            <td>
+                                <input type="submit" value="Modificar" asp-page-handler="BtModificar" class="btn btn-warning btn-sm" asp-route-data="@elemento.Id" />
+                                <input type="submit" value="Borrar" asp-page-handler="BtBorrarVal" class="btn btn-danger btn-sm" asp-route-data="@elemento.Id" />
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </form>
+    </div>
+</center>

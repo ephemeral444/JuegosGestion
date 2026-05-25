@@ -1,0 +1,169 @@
+﻿@* Pages/Ventanas/Admi/VideojuegosHTML.cshtml *@
+@page
+@model GestionJ_Razor.Pages.Ventanas.Admi.VideojuegosHTMLModel
+@{
+    ViewData["Title"] = "Videojuegos";
+}
+
+<center>
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div align="left">
+                <h3>Videojuegos</h3>
+            </div>
+
+            <div>
+                <input type="submit" value="Refrescar" class="btn btn-secondary" asp-page-handler="BtRefrescar" />
+                <input type="submit" value="Nuevo" class="btn btn-secondary" asp-page-handler="BtNuevo" disabled="@(Model.Videojuego != null)" />
+                <input type="submit" value="Guardar" class="btn btn-secondary" asp-page-handler="BtGuardar" disabled="@(Model.Videojuego == null)" />
+            </div>
+
+            @if (Model.Videojuego != null)
+            {
+                <input type="hidden" asp-for="@Model.Videojuego!.Id" />
+                <br />
+                <div>
+                    <div class="form-group">
+                        <label>Titulo</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Videojuego!.Titulo" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Genero</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Videojuego!.Genero" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Formato</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Videojuego!.Formato" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Desarrolladora</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Videojuego!.Desarrolladora" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Region</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Videojuego!.Region" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tamanio</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Videojuego!.Tamanio" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha Lanzamiento</label>
+                        <div class="col-6">
+                            <input type="date" class="form-control" asp-for="@Model.Videojuego!.FechaLanzamiento" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Licencia</label>
+                        <div class="col-6">
+                            <input type="checkbox" asp-for="@Model.Videojuego!.Licencia" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Completado</label>
+                        <div class="col-6">
+                            <input type="checkbox" asp-for="@Model.Videojuego!.Completado" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Usuario</label>
+                        <div class="col-6">
+                            <select class="form-control" asp-for="@Model.Videojuego!.UsuarioId">
+                                @if (Model.ListaUsuarios != null)
+                                {
+                                    @foreach (var u in Model.ListaUsuarios)
+                                    {
+                                        <option value="@u.Id">@u.Nombre @u.Apellido</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Plataforma</label>
+                        <div class="col-6">
+                            <select class="form-control" asp-for="@Model.Videojuego!.PlataformaId">
+                                @if (Model.ListaPlataformas != null)
+                                {
+                                    @foreach (var p in Model.ListaPlataformas)
+                                    {
+                                        <option value="@p.Id">@p.NombrePlataforma</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (ViewData.ContainsKey("Mensaje"))
+            {
+                <div class="alert alert-danger mt-2">
+                    @ViewData["Mensaje"]
+                </div>
+            }
+
+            @if (Model.Videojuego != null && Model.Borrando)
+            {
+                <div class="popup">
+                    <div class="pp_ms_inner">
+                        <div style="width:95%">
+                            <h2 align="left">Mensaje</h2>
+                            <h6 align="left">¿Desea borrar el Videojuego?</h6>
+                            <h6 align="left">@Model.Videojuego!.Titulo</h6>
+                            <input type="submit" value="Cerrar" asp-page-handler="BtCerrar" class="btn btn-secondary" />
+                            <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Lista != null && Model.Lista.Count > 0)
+            {
+                <br />
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Id</th>
+                        <th>Titulo</th>
+                        <th>Genero</th>
+                        <th>Desarrolladora</th>
+                        <th>Region</th>
+                        <th>Fecha Lanzamiento</th>
+                        <th>Completado</th>
+                        <th>Acciones</th>
+                    </tr>
+                    @foreach (var elemento in Model.Lista)
+                    {
+                        <tr>
+                            <td>@elemento.Id</td>
+                            <td>@elemento.Titulo</td>
+                            <td>@elemento.Genero</td>
+                            <td>@elemento.Desarrolladora</td>
+                            <td>@elemento.Region</td>
+                            <td>@elemento.FechaLanzamiento</td>
+                            <td>@(elemento.Completado ? "Sí" : "No")</td>
+                            <td>
+                                <input type="submit" value="Modificar" asp-page-handler="BtModificar" class="btn btn-warning btn-sm" asp-route-data="@elemento.Id" />
+                                <input type="submit" value="Borrar" asp-page-handler="BtBorrarVal" class="btn btn-danger btn-sm" asp-route-data="@elemento.Id" />
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </form>
+    </div>
+</center>

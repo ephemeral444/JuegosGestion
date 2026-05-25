@@ -1,0 +1,121 @@
+﻿@* Pages/Ventanas/Admi/TrucosHTML.cshtml *@
+@page
+@model GestionJ_Razor.Pages.Ventanas.Admi.TrucosHTMLModel
+@{
+    ViewData["Title"] = "Trucos";
+}
+
+<center>
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div align="left">
+                <h3>Trucos</h3>
+            </div>
+
+            <div>
+                <input type="submit" value="Refrescar" class="btn btn-secondary" asp-page-handler="BtRefrescar" />
+                <input type="submit" value="Nuevo" class="btn btn-secondary" asp-page-handler="BtNuevo" disabled="@(Model.Truco != null)" />
+                <input type="submit" value="Guardar" class="btn btn-secondary" asp-page-handler="BtGuardar" disabled="@(Model.Truco == null)" />
+            </div>
+
+            @if (Model.Truco != null)
+            {
+                <input type="hidden" asp-for="@Model.Truco!.Id" />
+                <br />
+                <div>
+                    <div class="form-group">
+                        <label>Codigo Truco</label>
+                        <div class="col-6">
+                            <input type="number" class="form-control" asp-for="@Model.Truco!.CodigoTruco" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripcion</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Truco!.Descripcion" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Activo</label>
+                        <div class="col-6">
+                            <input type="checkbox" asp-for="@Model.Truco!.Activo" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha Creacion</label>
+                        <div class="col-6">
+                            <input type="date" class="form-control" asp-for="@Model.Truco!.FechaCreacionTruco" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Videojuego</label>
+                        <div class="col-6">
+                            <select class="form-control" asp-for="@Model.Truco!.VideojuegoId">
+                                @if (Model.ListaVideojuegos != null)
+                                {
+                                    @foreach (var v in Model.ListaVideojuegos)
+                                    {
+                                        <option value="@v.Id">@v.Titulo</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (ViewData.ContainsKey("Mensaje"))
+            {
+                <div class="alert alert-danger mt-2">
+                    @ViewData["Mensaje"]
+                </div>
+            }
+
+            @if (Model.Truco != null && Model.Borrando)
+            {
+                <div class="popup">
+                    <div class="pp_ms_inner">
+                        <div style="width:95%">
+                            <h2 align="left">Mensaje</h2>
+                            <h6 align="left">¿Desea borrar el Truco?</h6>
+                            <h6 align="left">@Model.Truco!.Descripcion</h6>
+                            <input type="submit" value="Cerrar" asp-page-handler="BtCerrar" class="btn btn-secondary" />
+                            <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Lista != null && Model.Lista.Count > 0)
+            {
+                <br />
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Id</th>
+                        <th>Codigo</th>
+                        <th>Descripcion</th>
+                        <th>Activo</th>
+                        <th>Fecha Creacion</th>
+                        <th>Acciones</th>
+                    </tr>
+                    @foreach (var elemento in Model.Lista)
+                    {
+                        <tr>
+                            <td>@elemento.Id</td>
+                            <td>@elemento.CodigoTruco</td>
+                            <td>@elemento.Descripcion</td>
+                            <td>@(elemento.Activo ? "✔" : "✘")</td>
+                            <td>@elemento.FechaCreacionTruco</td>
+                            <td>
+                                <input type="submit" value="Modificar" asp-page-handler="BtModificar" class="btn btn-warning btn-sm" asp-route-data="@elemento.Id" />
+                                <input type="submit" value="Borrar" asp-page-handler="BtBorrarVal" class="btn btn-danger btn-sm" asp-route-data="@elemento.Id" />
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </form>
+    </div>
+</center>

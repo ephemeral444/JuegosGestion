@@ -1,0 +1,140 @@
+﻿@* Pages/Ventanas/Admi/LogrosHTML.cshtml *@
+@page
+@model GestionJ_Razor.Pages.Ventanas.Admi.LogrosHTMLModel
+@{
+    ViewData["Title"] = "Logros";
+}
+
+<center>
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div align="left">
+                <h3>Logros</h3>
+            </div>
+
+            <div>
+                <input type="submit" value="Refrescar" class="btn btn-secondary" asp-page-handler="BtRefrescar" />
+                <input type="submit" value="Nuevo" class="btn btn-secondary" asp-page-handler="BtNuevo" disabled="@(Model.Logro != null)" />
+                <input type="submit" value="Guardar" class="btn btn-secondary" asp-page-handler="BtGuardar" disabled="@(Model.Logro == null)" />
+            </div>
+
+            @if (Model.Logro != null)
+            {
+                <input type="hidden" asp-for="@Model.Logro!.Id" />
+                <br />
+                <div>
+                    <div class="form-group">
+                        <label>Nombre Logro</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Logro!.NombreLogro" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripcion</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Logro!.Descripcion" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Rareza</label>
+                        <div class="col-6">
+                            <select class="form-control" asp-for="@Model.Logro!.Rareza">
+                                <option value="Bronce">🥉 Bronce - 100pts</option>
+                                <option value="Plata">🥈 Plata - 250pts</option>
+                                <option value="Oro">🥇 Oro - 500pts</option>
+                                <option value="Platino">💎 Platino - 1000pts</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Estado Desbloqueado</label>
+                        <div class="col-6">
+                            <input type="checkbox" asp-for="@Model.Logro!.EstadoDesbloqueado" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha Desbloqueo</label>
+                        <div class="col-6">
+                            <input type="date" class="form-control" asp-for="@Model.Logro!.FechaDesbloqueo" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Puntos</label>
+                        <div class="col-6">
+                            <input type="number" class="form-control" asp-for="@Model.Logro!.Puntos" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Videojuego</label>
+                        <div class="col-6">
+                            <select class="form-control" asp-for="@Model.Logro!.VideojuegoId">
+                                @if (Model.ListaVideojuegos != null)
+                                {
+                                    @foreach (var v in Model.ListaVideojuegos)
+                                    {
+                                        <option value="@v.Id">@v.Titulo</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (ViewData.ContainsKey("Mensaje"))
+            {
+                <div class="alert alert-danger mt-2">
+                    @ViewData["Mensaje"]
+                </div>
+            }
+
+            @if (Model.Logro != null && Model.Borrando)
+            {
+                <div class="popup">
+                    <div class="pp_ms_inner">
+                        <div style="width:95%">
+                            <h2 align="left">Mensaje</h2>
+                            <h6 align="left">¿Desea borrar el Logro?</h6>
+                            <h6 align="left">@Model.Logro!.NombreLogro</h6>
+                            <input type="submit" value="Cerrar" asp-page-handler="BtCerrar" class="btn btn-secondary" />
+                            <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Lista != null && Model.Lista.Count > 0)
+            {
+                <br />
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre Logro</th>
+                        <th>Rareza</th>
+                        <th>Puntos</th>
+                        <th>Desbloqueado</th>
+                        <th>Fecha Desbloqueo</th>
+                        <th>Acciones</th>
+                    </tr>
+                    @foreach (var elemento in Model.Lista)
+                    {
+                        <tr>
+                            <td>@elemento.Id</td>
+                            <td>@elemento.NombreLogro</td>
+                            <td>@elemento.Rareza</td>
+                            <td>@elemento.Puntos</td>
+                            <td>@(elemento.EstadoDesbloqueado ? "✔" : "✘")</td>
+                            <td>@elemento.FechaDesbloqueo</td>
+                            <td>
+                                <input type="submit" value="Modificar" asp-page-handler="BtModificar" class="btn btn-warning btn-sm" asp-route-data="@elemento.Id" />
+                                <input type="submit" value="Borrar" asp-page-handler="BtBorrarVal" class="btn btn-danger btn-sm" asp-route-data="@elemento.Id" />
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </form>
+    </div>
+</center>

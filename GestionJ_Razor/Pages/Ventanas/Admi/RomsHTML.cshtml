@@ -1,0 +1,143 @@
+﻿@* Pages/Ventanas/Admi/RomsHTML.cshtml *@
+@page
+@model GestionJ_Razor.Pages.Ventanas.Admi.RomsHTMLModel
+@{
+    ViewData["Title"] = "Roms";
+}
+
+<center>
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div align="left">
+                <h3>Roms</h3>
+            </div>
+
+            <div>
+                <input type="submit" value="Refrescar" class="btn btn-secondary" asp-page-handler="BtRefrescar" />
+                <input type="submit" value="Nuevo" class="btn btn-secondary" asp-page-handler="BtNuevo" disabled="@(Model.Rom != null)" />
+                <input type="submit" value="Guardar" class="btn btn-secondary" asp-page-handler="BtGuardar" disabled="@(Model.Rom == null)" />
+            </div>
+
+            @if (Model.Rom != null)
+            {
+                <input type="hidden" asp-for="@Model.Rom!.Id" />
+                <br />
+                <div>
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Rom!.Nombre" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Genero</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Rom!.Genero" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Desarrolladora</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Rom!.Desarrolladora" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha Lanzamiento</label>
+                        <div class="col-6">
+                            <input type="date" class="form-control" asp-for="@Model.Rom!.FechaLanzamiento" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tamanio Archivo</label>
+                        <div class="col-6">
+                            <input class="form-control" asp-for="@Model.Rom!.TamanioArchivo" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Videojuego</label>
+                        <div class="col-6">
+                            <select class="form-control" asp-for="@Model.Rom!.VideojuegoId">
+                                @if (Model.ListaVideojuegos != null)
+                                {
+                                    @foreach (var v in Model.ListaVideojuegos)
+                                    {
+                                        <option value="@v.Id">@v.Titulo</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Emulador</label>
+                        <div class="col-6">
+                            <select class="form-control" asp-for="@Model.Rom!.EmuladorId">
+                                @if (Model.ListaEmuladores != null)
+                                {
+                                    @foreach (var e in Model.ListaEmuladores)
+                                    {
+                                        <option value="@e.Id">@e.Nombre</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (ViewData.ContainsKey("Mensaje"))
+            {
+                <div class="alert alert-danger mt-2">
+                    @ViewData["Mensaje"]
+                </div>
+            }
+
+            @if (Model.Rom != null && Model.Borrando)
+            {
+                <div class="popup">
+                    <div class="pp_ms_inner">
+                        <div style="width:95%">
+                            <h2 align="left">Mensaje</h2>
+                            <h6 align="left">¿Desea borrar la Rom?</h6>
+                            <h6 align="left">@Model.Rom!.Nombre</h6>
+                            <input type="submit" value="Cerrar" asp-page-handler="BtCerrar" class="btn btn-secondary" />
+                            <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Lista != null && Model.Lista.Count > 0)
+            {
+                <br />
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Genero</th>
+                        <th>Desarrolladora</th>
+                        <th>Tamanio</th>
+                        <th>Fecha Lanzamiento</th>
+                        <th>Acciones</th>
+                    </tr>
+                    @foreach (var elemento in Model.Lista)
+                    {
+                        <tr>
+                            <td>@elemento.Id</td>
+                            <td>@elemento.Nombre</td>
+                            <td>@elemento.Genero</td>
+                            <td>@elemento.Desarrolladora</td>
+                            <td>@elemento.TamanioArchivo</td>
+                            <td>@elemento.FechaLanzamiento</td>
+                            <td>
+                                <input type="submit" value="Modificar" asp-page-handler="BtModificar" class="btn btn-warning btn-sm" asp-route-data="@elemento.Id" />
+                                <input type="submit" value="Borrar" asp-page-handler="BtBorrarVal" class="btn btn-danger btn-sm" asp-route-data="@elemento.Id" />
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </form>
+    </div>
+</center>
