@@ -1,0 +1,168 @@
+﻿@* Pages/Registro.cshtml *@
+@page
+@model GestionJ_Razor.Pages.RegistroModel
+@{
+    ViewData["Title"] = "Registro";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GestionJ - Registro</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .registro-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            color: white;
+        }
+        .registro-card h2 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 2rem;
+        }
+        .registro-card p.subtitulo {
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 30px;
+        }
+        .form-control {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .form-control:focus {
+            background: rgba(255,255,255,0.15);
+            border-color: #e94560;
+            color: white;
+            box-shadow: none;
+        }
+        .form-control::placeholder { color: rgba(255,255,255,0.4); }
+        .form-label { color: rgba(255,255,255,0.8); font-size: 0.9rem; }
+        .btn-registrar {
+            background: #e94560;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            width: 100%;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        .btn-registrar:hover { background: #c73652; color: white; }
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255,255,255,0.6);
+        }
+        .login-link a { color: #e94560; text-decoration: none; }
+        .login-link a:hover { text-decoration: underline; }
+        .error-msg {
+            background: rgba(233,69,96,0.2);
+            border: 1px solid #e94560;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        .exito-msg {
+            background: rgba(40,167,69,0.2);
+            border: 1px solid #28a745;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="registro-card">
+        <h2>🎮 GestionJ</h2>
+        <p class="subtitulo">Creá tu cuenta gratis</p>
+
+        <form method="POST" asp-page-handler="BtRegistrar">
+            @Html.AntiForgeryToken()
+
+            @if (!string.IsNullOrEmpty(Model.MensajeError))
+            {
+                <div class="error-msg">@Model.MensajeError</div>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.MensajeExito))
+            {
+                <div class="exito-msg">@Model.MensajeExito</div>
+            }
+
+            <div class="row">
+                <div class="col-6 mb-3">
+                    <label class="form-label">Nombre *</label>
+                    <input class="form-control" asp-for="Nombre" placeholder="Juan" />
+                </div>
+                <div class="col-6 mb-3">
+                    <label class="form-label">Apellido</label>
+                    <input class="form-control" asp-for="Apellido" placeholder="Pérez" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6 mb-3">
+                    <label class="form-label">Telefono</label>
+                    <input class="form-control" asp-for="Telefono" placeholder="3001234567" />
+                </div>
+                <div class="col-6 mb-3">
+                    <label class="form-label">Edad</label>
+                    <input type="number" class="form-control" asp-for="Edad" placeholder="18" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Pais</label>
+                <input class="form-control" asp-for="Pais" placeholder="Colombia" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Correo *</label>
+                <input type="email" class="form-control" asp-for="Correo" placeholder="correo@ejemplo.com" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Contraseña *</label>
+                <input type="password" class="form-control" asp-for="Contrasena" placeholder="••••••••" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Confirmar Contraseña *</label>
+                <input type="password" class="form-control" asp-for="ConfirmarContrasena" placeholder="••••••••" />
+            </div>
+
+            <button type="submit" class="btn-registrar">Crear cuenta</button>
+        </form>
+
+        <div class="login-link">
+            ¿Ya tenés cuenta?
+            <a href="#" onclick="history.back()">Iniciá sesión</a>
+        </div>
+    </div>
+</body>
+</html>

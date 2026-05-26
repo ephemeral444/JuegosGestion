@@ -1,10 +1,267 @@
-﻿@page
-@model IndexModel
+﻿@* Pages/Index.cshtml *@
+@page
+@model GestionJ_Razor.Pages.IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    .hero {
+        background: linear-gradient(135deg, #0d0d1a 0%, #1a0505 50%, #0d0d1a 100%);
+        padding: 80px 40px;
+        text-align: center;
+        border-bottom: 1px solid rgba(192,57,43,0.2);
+    }
+    .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: white;
+        margin-bottom: 15px;
+        line-height: 1.1;
+    }
+    .hero h1 span { color: #c0392b; }
+    .hero p {
+        font-size: 1.2rem;
+        color: rgba(255,255,255,0.6);
+        max-width: 600px;
+        margin: 0 auto 30px;
+    }
+    .hero-btns { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+    .btn-hero-primary {
+        background: #c0392b;
+        color: white;
+        padding: 14px 35px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1rem;
+        transition: background 0.2s;
+    }
+    .btn-hero-primary:hover { background: #a93226; color: white; }
+    .btn-hero-secondary {
+        background: transparent;
+        color: white;
+        padding: 14px 35px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        border: 1px solid rgba(255,255,255,0.3);
+        transition: all 0.2s;
+    }
+    .btn-hero-secondary:hover { background: rgba(255,255,255,0.1); color: white; }
+    /* Consolas */
+    .consolas-section {
+        padding: 60px 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .section-title::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: rgba(255,255,255,0.1);
+        margin-left: 15px;
+    }
+    .consolas-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+        margin-bottom: 50px;
+    }
+    .consola-card {
+        background: #12121f;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        padding: 20px 15px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        color: white;
+    }
+    .consola-card:hover {
+        border-color: #c0392b;
+        background: #1a0a0a;
+        transform: translateY(-3px);
+        color: white;
+    }
+    .consola-icon { font-size: 2.5rem; margin-bottom: 10px; }
+    .consola-nombre { font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.8); }
+    /* Features */
+    .features-section {
+        background: #0d0d1a;
+        padding: 60px 40px;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 25px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .feature-card {
+        background: #12121f;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        padding: 30px 25px;
+        text-align: center;
+        transition: border-color 0.2s;
+    }
+    .feature-card:hover { border-color: rgba(192,57,43,0.4); }
+    .feature-icon { font-size: 2.5rem; margin-bottom: 15px; }
+    .feature-title { font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 10px; }
+    .feature-desc { font-size: 0.9rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+    /* Stats */
+    .stats-section {
+        padding: 50px 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        text-align: center;
+    }
+    .stat-item { }
+    .stat-numero {
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: #c0392b;
+    }
+    .stat-label {
+        font-size: 0.9rem;
+        color: rgba(255,255,255,0.5);
+        margin-top: 5px;
+    }
+</style>
+
+<!-- HERO -->
+<div class="hero">
+    <h1>Tu biblioteca de juegos<br /><span>retro favoritos</span></h1>
+    <p>Descargá emuladores, jugá títulos clásicos de Nintendo, PlayStation, Xbox y más. Guardá tu progreso, desbloqueá logros y competí en línea.</p>
+    <div class="hero-btns">
+         @if (string.IsNullOrEmpty(HttpContext.Session.GetString("Usuario")))
+        {
+            <a class="btn-hero-primary" asp-page="/Registro">Crear cuenta gratis</a>
+            <a class="btn-hero-secondary" href="#"
+               data-bs-toggle="modal" data-bs-target="#modalLogin">
+                Iniciar sesión
+            </a>
+        }
+        else
+        {
+            <a class="btn-hero-primary" asp-page="/Ventanas/Cliente/Index">
+                Ir a mi biblioteca
+            </a>
+        }
+    </div>
+</div>
+
+<!-- CONSOLAS -->
+<div class="consolas-section">
+    <div class="section-title">🎮 Plataformas disponibles</div>
+    <div class="consolas-grid">
+        <a class="consola-card" href="#">
+            <div class="consola-icon">🔵</div>
+            <div class="consola-nombre">PlayStation 2</div>
+        </a>
+        <a class="consola-card" href="#">
+            <div class="consola-icon">🟢</div>
+            <div class="consola-nombre">Xbox 360</div>
+        </a>
+        <a class="consola-card" href="#">
+            <div class="consola-icon">🔴</div>
+            <div class="consola-nombre">Nintendo 64</div>
+        </a>
+        <a class="consola-card" href="#">
+            <div class="consola-icon">🟡</div>
+            <div class="consola-nombre">Game Boy Advance</div>
+        </a>
+        <a class="consola-card" href="#">
+            <div class="consola-icon">⚪</div>
+            <div class="consola-nombre">PSP</div>
+        </a>
+        <a class="consola-card" href="#">
+            <div class="consola-icon">🟣</div>
+            <div class="consola-nombre">PlayStation 3</div>
+        </a>
+        <a class="consola-card" href="#">
+            <div class="consola-icon">🟤</div>
+            <div class="consola-nombre">Super Nintendo</div>
+        </a>
+        <a class="consola-card" href="#">
+            <div class="consola-icon">⚫</div>
+            <div class="consola-nombre">Sega Genesis</div>
+        </a>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-section" style="padding: 0; margin-bottom: 50px;">
+        <div class="stat-item">
+            <div class="stat-numero">500+</div>
+            <div class="stat-label">Juegos disponibles</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-numero">8</div>
+            <div class="stat-label">Plataformas retro</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-numero">100%</div>
+            <div class="stat-label">Gratis</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-numero">24/7</div>
+            <div class="stat-label">Disponible</div>
+        </div>
+    </div>
+</div>
+
+<!-- FEATURES -->
+<div class="features-section">
+    <div style="max-width:1200px; margin:0 auto;">
+        <div class="section-title">✨ ¿Qué podés hacer?</div>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">💾</div>
+            <div class="feature-title">Descargá ROMs</div>
+            <div class="feature-desc">Accedé a cientos de ROMs de tus consolas favoritas y jugá directo desde tu PC.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🏆</div>
+            <div class="feature-title">Logros en línea</div>
+            <div class="feature-desc">Desbloqueá logros de Bronce, Plata, Oro y Platino mientras jugás y subí de nivel.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <div class="feature-title">Estadísticas</div>
+            <div class="feature-desc">Seguí tus horas de juego, FPS promedio y juegos completados en tiempo real.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💻</div>
+            <div class="feature-title">Emuladores</div>
+            <div class="feature-desc">Descargá los mejores emuladores configurados y listos para usar al instante.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💿</div>
+            <div class="feature-title">Guardado en la nube</div>
+            <div class="feature-desc">Tu progreso guardado siempre disponible, sin importar desde qué PC juegues.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <div class="feature-title">Trucos y cheats</div>
+            <div class="feature-desc">Accedé a códigos y trucos para tus juegos favoritos integrados en la plataforma.</div>
+        </div>
+    </div>
 </div>

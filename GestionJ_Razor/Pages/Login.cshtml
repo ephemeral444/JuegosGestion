@@ -1,0 +1,144 @@
+﻿@* Pages/Login.cshtml *@
+@page
+@model GestionJ_Razor.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GestionJ - Login</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            color: white;
+        }
+        .login-card h2 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 2rem;
+        }
+        .login-card p.subtitulo {
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 30px;
+        }
+        .form-control {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            border-radius: 10px;
+            padding: 12px;
+        }
+        .form-control:focus {
+            background: rgba(255,255,255,0.15);
+            border-color: #e94560;
+            color: white;
+            box-shadow: none;
+        }
+        .form-control::placeholder { color: rgba(255,255,255,0.4); }
+        .form-label { color: rgba(255,255,255,0.8); }
+        .btn-entrar {
+            background: #e94560;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            width: 100%;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        .btn-entrar:hover { background: #c73652; color: white; }
+        .btn-limpiar {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            padding: 12px;
+            width: 100%;
+            color: white;
+            margin-top: 8px;
+        }
+        .btn-limpiar:hover { background: rgba(255,255,255,0.1); color: white; }
+        .registro-link {
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255,255,255,0.6);
+        }
+        .registro-link a { color: #e94560; text-decoration: none; }
+        .registro-link a:hover { text-decoration: underline; }
+        .error-msg {
+            background: rgba(233,69,96,0.2);
+            border: 1px solid #e94560;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>🎮 GestionJ</h2>
+        <p class="subtitulo">Iniciá sesión para continuar</p>
+
+        <form method="POST">
+            @Html.AntiForgeryToken()
+
+            @if (!string.IsNullOrEmpty(Model.MensajeError))
+            {
+                <div class="error-msg">@Model.MensajeError</div>
+            }
+
+            <div class="mb-3">
+                <label class="form-label">Correo</label>
+                <input type="email"
+                       class="form-control"
+                       asp-for="Correo"
+                       placeholder="correo@ejemplo.com" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                <input type="password"
+                       class="form-control"
+                       asp-for="Contrasena"
+                       placeholder="••••••••" />
+            </div>
+
+            <input type="submit"
+                   value="Entrar"
+                   asp-page-handler="BtEntrar"
+                   class="btn-entrar" />
+
+            <input type="submit"
+                   value="Limpiar"
+                   asp-page-handler="BtLimpiar"
+                   class="btn-limpiar" />
+        </form>
+
+        <div class="registro-link">
+            ¿No tenés cuenta? <a asp-page="/Registro">Registrate acá</a>
+        </div>
+    </div>
+</body>
+</html>

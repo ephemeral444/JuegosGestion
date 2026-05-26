@@ -11,4 +11,8 @@
     <ProjectReference Include="..\Presentaciones_biblioteca\Presentaciones_biblioteca.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Ventanas\Cliente\" />
+  </ItemGroup>
+
 </Project>

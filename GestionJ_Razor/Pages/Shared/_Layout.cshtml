@@ -1,58 +1,238 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@* Shared/_Layout.cshtml *@
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GestionJ_Razor</title>
-    <script type="importmap"></script>
+    <title>@ViewData["Title"] - Elementel Games</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/GestionJ_Razor.styles.css" asp-append-version="true" />
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background: #0a0a14;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+        }
+        .navbar-elementel {
+            background: linear-gradient(90deg, #0d0d1a, #1a0a0a);
+            border-bottom: 2px solid #c0392b;
+            padding: 0 30px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar-left { display: flex; align-items: center; gap: 40px; }
+        .navbar-brand-custom {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .navbar-brand-custom span { color: #c0392b; }
+        .navbar-links { display: flex; gap: 25px; }
+        .navbar-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .navbar-links a:hover { color: white; }
+        .navbar-right { display: flex; align-items: center; gap: 12px; }
+        .btn-nav-registro {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 7px 18px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-nav-registro:hover { background: rgba(255,255,255,0.1); color: white; }
+        .btn-nav-login {
+            background: #c0392b;
+            border: none;
+            color: white;
+            padding: 7px 18px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn-nav-login:hover { background: #a93226; }
+        .btn-nav-cerrar {
+            background: transparent;
+            border: 1px solid #c0392b;
+            color: #c0392b;
+            padding: 7px 18px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-nav-cerrar:hover { background: #c0392b; color: white; }
+        .usuario-bienvenida {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+        /* Modal */
+        .modal-content-custom {
+            background: #12121f;
+            border: 1px solid rgba(192,57,43,0.3);
+            border-radius: 16px;
+            color: white;
+        }
+        .modal-header-custom {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 25px;
+        }
+        .modal-body-custom { padding: 25px; }
+        .form-control-custom {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            border-radius: 8px;
+            padding: 11px 14px;
+            width: 100%;
+        }
+        .form-control-custom:focus {
+            outline: none;
+            border-color: #c0392b;
+            background: rgba(255,255,255,0.1);
+        }
+        .form-control-custom::placeholder { color: rgba(255,255,255,0.35); }
+        .btn-modal-entrar {
+            background: #c0392b;
+            border: none;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+        .btn-modal-entrar:hover { background: #a93226; }
+        .modal-registro-link {
+            text-align: center;
+            margin-top: 15px;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+        .modal-registro-link a { color: #c0392b; text-decoration: none; }
+        /* Contenido */
+        .page-content { padding: 0; }
+        /* Footer */
+        .footer-elementel {
+            background: #0d0d1a;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding: 20px 30px;
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.85rem;
+            margin-top: 60px;
+        }
+        .footer-elementel span { color: #c0392b; }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">GestionJ_Razor</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+
+    <!-- NAVBAR -->
+    <nav class="navbar-elementel">
+        <div class="navbar-left">
+            <a class="navbar-brand-custom" asp-page="/Index">
+                ⚡ Elementel<span>Games</span>
+            </a>
+            <div class="navbar-links">
+                <a asp-page="/Index">Inicio</a>
+                <a href="#">Emuladores</a>
+                <a href="#">Juegos</a>
+                <a href="#">Soporte</a>
+                @if (Context.Session.GetString("RolId") == "1")
+                {
+                    <a asp-page="/Ventanas/Admi/Index" style="color:#c0392b; font-weight:700;">Admin</a>
+                }
+            </div>
+        </div>
+        <div class="navbar-right">
+            @if (string.IsNullOrEmpty(Context.Session.GetString("Usuario")))
+            {
+                <a class="btn-nav-registro" asp-page="/Registro">Registrarse</a>
+                <button class="btn-nav-login"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalLogin">
+                    Iniciar sesión
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                                   asp-page="/Ventanas/Admi/Index">
-                                Admin
-                            </a>
-                        </li>
-                    </ul>
+            }
+            else
+            {
+                <span class="usuario-bienvenida">
+                    👤 @Context.Session.GetString("UsuarioNombre")
+                </span>
+                <a class="btn-nav-cerrar" asp-page="/Login" asp-page-handler="BtCerrar">
+                    Cerrar sesión
+                </a>
+            }
+        </div>
+    </nav>
+
+    <!-- MODAL LOGIN -->
+    <div class="modal fade" id="modalLogin" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title">⚡ Iniciar Sesión</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body modal-body-custom">
+                    <form method="POST" asp-page="/Login" asp-page-handler="BtEntrar">
+                        @Html.AntiForgeryToken()
+                        <div class="mb-3">
+                            <label style="color:rgba(255,255,255,0.7); font-size:0.9rem;">Correo</label>
+                            <input type="email" name="Correo"
+                                   class="form-control-custom mt-1"
+                                   placeholder="correo@ejemplo.com" />
+                        </div>
+                        <div class="mb-3">
+                            <label style="color:rgba(255,255,255,0.7); font-size:0.9rem;">Contraseña</label>
+                            <input type="password" name="Contrasena"
+                                   class="form-control-custom mt-1"
+                                   placeholder="••••••••" />
+                        </div>
+                        <button type="submit" class="btn-modal-entrar">Entrar</button>
+                    </form>
+                    <div class="modal-registro-link">
+                        ¿No tenés cuenta? <a asp-page="/Registro">Registrate acá</a>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - GestionJ_Razor - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
+    <!-- CONTENIDO -->
+    <div class="page-content">
+        @RenderBody()
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer-elementel">
+        &copy; 2026 <span>Elementel Games</span> — Tu plataforma de juegos retro
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
