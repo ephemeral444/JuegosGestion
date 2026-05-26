@@ -1,0 +1,217 @@
+﻿@* Pages/Ventanas/Cliente/Estadisticas.cshtml *@
+@page
+@model GestionJ_Razor.Pages.Ventanas.Cliente.EstadisticasModel
+@{
+    ViewData["Title"] = "Mis Estadísticas";
+}
+
+<style>
+    .stats-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    .page-header {
+        margin-bottom: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .page-header h2 { font-size: 1.8rem; font-weight: 900; color: white; margin: 0; }
+    .page-header p { color: rgba(255,255,255,0.5); margin: 5px 0 0; }
+    .btn-volver {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.2);
+        color: white;
+        padding: 8px 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+    }
+    .btn-volver:hover { background: rgba(255,255,255,0.1); color: white; }
+    .resumen-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-bottom: 35px;
+    }
+    .resumen-card {
+        background: #12121f;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        padding: 25px 20px;
+        text-align: center;
+    }
+    .resumen-numero { font-size: 2.2rem; font-weight: 900; color: #c0392b; }
+    .resumen-label { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 5px; }
+    .seccion { margin-bottom: 35px; }
+    .seccion-titulo {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .stats-tabla {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .stats-tabla th {
+        background: #0d0d1a;
+        color: rgba(255,255,255,0.5);
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        padding: 12px 15px;
+        text-align: left;
+        letter-spacing: 0.5px;
+    }
+    .stats-tabla td {
+        padding: 14px 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 0.9rem;
+        color: rgba(255,255,255,0.8);
+    }
+    .stats-tabla tr:hover td { background: rgba(255,255,255,0.03); }
+    .logros-rareza {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+    .rareza-card {
+        background: #12121f;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+    }
+    .rareza-icono { font-size: 2.5rem; margin-bottom: 10px; }
+    .rareza-count { font-size: 1.8rem; font-weight: 900; }
+    .rareza-nombre { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 4px; }
+    .platino-color { color: #9b59b6; }
+    .oro-color { color: #ffc107; }
+    .plata-color { color: #adb5bd; }
+    .bronce-color { color: #cd7f32; }
+</style>
+
+<div class="stats-container">
+    <div class="page-header">
+        <div>
+            <h2>📊 Mis Estadísticas</h2>
+            <p>Rendimiento general de @Model.NombreUsuario</p>
+        </div>
+        <a class="btn-volver" asp-page="/Ventanas/Cliente/Index">← Volver al perfil</a>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="resumen-grid">
+        <div class="resumen-card">
+            <div class="resumen-numero">@(Model.MisJuegos?.Count ?? 0)</div>
+            <div class="resumen-label">Juegos totales</div>
+        </div>
+        <div class="resumen-card">
+            <div class="resumen-numero">@(Model.MisJuegos?.Count(j => j.Completado) ?? 0)</div>
+            <div class="resumen-label">Completados</div>
+        </div>
+        <div class="resumen-card">
+            <div class="resumen-numero">@(Model.MisLogros?.Count ?? 0)</div>
+            <div class="resumen-label">Logros desbloqueados</div>
+        </div>
+        <div class="resumen-card">
+            <div class="resumen-numero">@(Model.MisSesiones?.Count ?? 0)</div>
+            <div class="resumen-label">Sesiones jugadas</div>
+        </div>
+    </div>
+
+    <!-- LOGROS POR RAREZA -->
+    <div class="seccion">
+        <div class="seccion-titulo">🏆 Logros por rareza</div>
+        <div class="logros-rareza">
+            <div class="rareza-card">
+                <div class="rareza-icono">💎</div>
+                <div class="rareza-count platino-color">
+                    @(Model.MisLogros?.Count(l => l.Rareza == "Platino") ?? 0)
+                </div>
+                <div class="rareza-nombre">Platino</div>
+            </div>
+            <div class="rareza-card">
+                <div class="rareza-icono">🥇</div>
+                <div class="rareza-count oro-color">
+                    @(Model.MisLogros?.Count(l => l.Rareza == "Oro") ?? 0)
+                </div>
+                <div class="rareza-nombre">Oro</div>
+            </div>
+            <div class="rareza-card">
+                <div class="rareza-icono">🥈</div>
+                <div class="rareza-count plata-color">
+                    @(Model.MisLogros?.Count(l => l.Rareza == "Plata") ?? 0)
+                </div>
+                <div class="rareza-nombre">Plata</div>
+            </div>
+            <div class="rareza-card">
+                <div class="rareza-icono">🥉</div>
+                <div class="rareza-count bronce-color">
+                    @(Model.MisLogros?.Count(l => l.Rareza == "Bronce") ?? 0)
+                </div>
+                <div class="rareza-nombre">Bronce</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ESTADISTICAS POR JUEGO -->
+    @if (Model.MisEstadisticas != null && Model.MisEstadisticas.Count > 0)
+    {
+        <div class="seccion">
+            <div class="seccion-titulo">🕹️ Estadísticas por juego</div>
+            <table class="stats-tabla">
+                <thead>
+                    <tr>
+                        <th>Juego</th>
+                        <th>Tiempo de juego</th>
+                        <th>Juegos completos</th>
+                        <th>Logros obtenidos</th>
+                        <th>FPS promedio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var stat in Model.MisEstadisticas)
+                    {
+                        var juego = Model.MisJuegos?.FirstOrDefault(j => j.Id == stat.VideojuegoId);
+                        <tr>
+                            <td>🎮 @(juego?.Titulo ?? "Desconocido")</td>
+                            <td>@stat.TiempoJuego</td>
+                            <td>@stat.JuegosCompletos</td>
+                            <td>@stat.LogrosObtenidos</td>
+                            <td>@stat.PromedioFPS fps</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <!-- SESIONES -->
+    @if (Model.MisSesiones != null && Model.MisSesiones.Count > 0)
+    {
+        <div class="seccion">
+            <div class="seccion-titulo">⏱️ Sesiones recientes</div>
+            <table class="stats-tabla">
+                <thead>
+                    <tr>
+                        <th>Juego</th>
+                        <th>Duración</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var sesion in Model.MisSesiones.Take(10))
+                    {
+                        <tr>
+                            <td>🎮 @sesion.NombreJuego</td>
+                            <td>@sesion.Duracion</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

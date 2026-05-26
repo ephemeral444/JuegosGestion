@@ -1,0 +1,182 @@
+﻿@* Pages/Ventanas/Cliente/Biblioteca.cshtml *@
+@page
+@model GestionJ_Razor.Pages.Ventanas.Cliente.BibliotecaModel
+@{
+    ViewData["Title"] = "Mi Biblioteca";
+}
+
+<style>
+    .biblioteca-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    .page-header {
+        margin-bottom: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .page-header h2 { font-size: 1.8rem; font-weight: 900; color: white; margin: 0; }
+    .page-header p { color: rgba(255,255,255,0.5); margin: 5px 0 0; font-size: 0.95rem; }
+    .btn-volver {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.2);
+        color: white;
+        padding: 8px 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+    }
+    .btn-volver:hover { background: rgba(255,255,255,0.1); color: white; }
+    .juegos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+    .juego-card {
+        background: #12121f;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        overflow: hidden;
+        transition: all 0.2s;
+    }
+    .juego-card:hover {
+        border-color: rgba(192,57,43,0.4);
+        transform: translateY(-3px);
+    }
+    .juego-card-header {
+        background: linear-gradient(135deg, #1a0505, #12121f);
+        padding: 25px 20px;
+        text-align: center;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .juego-card-icon { font-size: 3rem; margin-bottom: 10px; }
+    .juego-card-titulo { font-size: 1.1rem; font-weight: 800; color: white; }
+    .juego-card-genero { font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 4px; }
+    .juego-card-body { padding: 18px 20px; }
+    .juego-card-info { display: flex; justify-content: space-between; margin-bottom: 12px; }
+    .juego-card-dato { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+    .juego-card-dato span { color: white; font-weight: 600; }
+    .juego-logros { margin-top: 12px; }
+    .logro-mini {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 20px;
+        padding: 3px 10px;
+        font-size: 0.75rem;
+        margin: 2px;
+        color: rgba(255,255,255,0.6);
+    }
+    .logro-platino { background: rgba(138,43,226,0.2); color: #9b59b6; }
+    .logro-oro { background: rgba(255,193,7,0.2); color: #ffc107; }
+    .logro-plata { background: rgba(173,181,189,0.2); color: #adb5bd; }
+    .logro-bronce { background: rgba(205,127,50,0.2); color: #cd7f32; }
+    .badge-completado {
+        background: rgba(40,167,69,0.2);
+        color: #28a745;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-top: 8px;
+    }
+    .badge-progreso {
+        background: rgba(192,57,43,0.2);
+        color: #c0392b;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-top: 8px;
+    }
+    .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+        color: rgba(255,255,255,0.3);
+    }
+    .empty-state-icon { font-size: 4rem; margin-bottom: 20px; }
+</style>
+
+<div class="biblioteca-container">
+    <div class="page-header">
+        <div>
+            <h2>📚 Mi Biblioteca</h2>
+            <p>Todos los juegos de @Model.NombreUsuario</p>
+        </div>
+        <a class="btn-volver" asp-page="/Ventanas/Cliente/Index">← Volver al perfil</a>
+    </div>
+
+    @if (Model.MisJuegos != null && Model.MisJuegos.Count > 0)
+    {
+        <div class="juegos-grid">
+            @foreach (var juego in Model.MisJuegos)
+            {
+                var logrosJuego = Model.TodosLogros?
+                    .Where(l => l.VideojuegoId == juego.Id && l.EstadoDesbloqueado)
+                    .ToList();
+
+                <div class="juego-card">
+                    <div class="juego-card-header">
+                        <div class="juego-card-icon">🎮</div>
+                        <div class="juego-card-titulo">@juego.Titulo</div>
+                        <div class="juego-card-genero">@juego.Genero</div>
+                    </div>
+                    <div class="juego-card-body">
+                        <div class="juego-card-info">
+                            <div class="juego-card-dato">Región: <span>@juego.Region</span></div>
+                            <div class="juego-card-dato">Tamaño: <span>@juego.Tamanio</span></div>
+                        </div>
+                        <div class="juego-card-info">
+                            <div class="juego-card-dato">Dev: <span>@juego.Desarrolladora</span></div>
+                            <div class="juego-card-dato">Formato: <span>@juego.Formato</span></div>
+                        </div>
+
+                        @if (logrosJuego != null && logrosJuego.Count > 0)
+                        {
+                            <div class="juego-logros">
+                                @foreach (var logro in logrosJuego.Take(4))
+                                {
+                                    var claseLogro = logro.Rareza switch {
+                                        "Platino" => "logro-platino",
+                                        "Oro" => "logro-oro",
+                                        "Plata" => "logro-plata",
+                                        _ => "logro-bronce"
+                                    };
+                                    var iconoLogro = logro.Rareza switch {
+                                        "Platino" => "💎",
+                                        "Oro" => "🥇",
+                                        "Plata" => "🥈",
+                                        _ => "🥉"
+                                    };
+                                    <span class="logro-mini @claseLogro">
+                                        @iconoLogro @logro.NombreLogro
+                                    </span>
+                                }
+                            </div>
+                        }
+
+                        @if (juego.Completado)
+                        {
+                            <span class="badge-completado">✔ Completado</span>
+                        }
+                        else
+                        {
+                            <span class="badge-progreso">⏳ En progreso</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <div class="empty-state-icon">🎮</div>
+            <p>No tenés juegos en tu biblioteca todavía.</p>
+        </div>
+    }
+</div>

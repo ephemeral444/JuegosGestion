@@ -156,13 +156,19 @@
             </a>
             <div class="navbar-links">
                 <a asp-page="/Index">Inicio</a>
-                <a href="#">Emuladores</a>
+                <a class="navbar-links" asp-page="/Emuladores">Emuladores</a>
                 <a href="#">Juegos</a>
                 <a href="#">Soporte</a>
                 @if (Context.Session.GetString("RolId") == "1")
                 {
                     <a asp-page="/Ventanas/Admi/Index" style="color:#c0392b; font-weight:700;">Admin</a>
                 }
+                else if (!string.IsNullOrEmpty(Context.Session.GetString("Usuario")))
+                {
+                    <a asp-page="/Ventanas/Cliente/Index" style="color:#c0392b; font-weight:700;">
+                    Mi perfil
+                </a>
+}
             </div>
         </div>
         <div class="navbar-right">

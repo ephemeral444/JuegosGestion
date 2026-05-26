@@ -1,0 +1,205 @@
+﻿@* Pages/Ventanas/Cliente/Index.cshtml *@
+@page
+@model GestionJ_Razor.Pages.Ventanas.Cliente.IndexModel
+@{
+    ViewData["Title"] = "Mi perfil";
+}
+
+<style>
+    .cliente-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    .bienvenida-banner {
+        background: linear-gradient(135deg, #12121f, #1a0505);
+        border: 1px solid rgba(192,57,43,0.3);
+        border-radius: 16px;
+        padding: 35px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 35px;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    .bienvenida-texto h2 {
+        font-size: 1.8rem;
+        font-weight: 900;
+        color: white;
+        margin: 0 0 5px 0;
+    }
+    .bienvenida-texto h2 span { color: #c0392b; }
+    .bienvenida-texto p { color: rgba(255,255,255,0.5); margin: 0; }
+    .nivel-badge {
+        background: #c0392b;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 1.1rem;
+    }
+    .stats-rapidas {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-bottom: 35px;
+    }
+    .stat-card {
+        background: #12121f;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        transition: border-color 0.2s;
+    }
+    .stat-card:hover { border-color: rgba(192,57,43,0.4); }
+    .stat-card-numero { font-size: 2rem; font-weight: 900; color: #c0392b; }
+    .stat-card-label { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 5px; }
+    .accesos-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-bottom: 35px;
+    }
+    .acceso-card {
+        background: #12121f;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        padding: 30px;
+        text-decoration: none;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        transition: all 0.2s;
+    }
+    .acceso-card:hover {
+        border-color: #c0392b;
+        background: #1a0a0a;
+        color: white;
+        transform: translateY(-2px);
+    }
+    .acceso-icon { font-size: 3rem; }
+    .acceso-titulo { font-size: 1.2rem; font-weight: 800; margin-bottom: 5px; }
+    .acceso-desc { font-size: 0.9rem; color: rgba(255,255,255,0.5); }
+    .juegos-recientes { margin-bottom: 35px; }
+    .seccion-titulo {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .juego-item {
+        background: #12121f;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 10px;
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        transition: border-color 0.2s;
+    }
+    .juego-item:hover { border-color: rgba(192,57,43,0.3); }
+    .juego-info { display: flex; align-items: center; gap: 15px; }
+    .juego-icon { font-size: 1.8rem; }
+    .juego-titulo { font-weight: 700; color: white; font-size: 0.95rem; }
+    .juego-genero { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+    .juego-badge {
+        background: rgba(192,57,43,0.2);
+        color: #c0392b;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    .juego-badge-completado {
+        background: rgba(40,167,69,0.2);
+        color: #28a745;
+    }
+</style>
+
+<div class="cliente-container">
+
+    <!-- BIENVENIDA -->
+    <div class="bienvenida-banner">
+        <div class="bienvenida-texto">
+            <h2>¡Bienvenido de nuevo, <span>@Model.NombreUsuario</span>! 👾</h2>
+            <p>Seguí jugando donde lo dejaste — tus juegos te esperan.</p>
+        </div>
+        <div class="nivel-badge">⭐ Nivel @Model.Nivel</div>
+    </div>
+
+    <!-- STATS RAPIDAS -->
+    <div class="stats-rapidas">
+        <div class="stat-card">
+            <div class="stat-card-numero">@(Model.MisJuegos?.Count ?? 0)</div>
+            <div class="stat-card-label">Juegos en biblioteca</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-numero">@Model.TotalLogros</div>
+            <div class="stat-card-label">Logros desbloqueados</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-numero">@Model.PuntosTotal</div>
+            <div class="stat-card-label">Puntos totales</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-numero">@(Model.MisJuegos?.Count(j => j.Completado) ?? 0)</div>
+            <div class="stat-card-label">Juegos completados</div>
+        </div>
+    </div>
+
+    <!-- ACCESOS RAPIDOS -->
+    <div class="accesos-grid">
+        <a class="acceso-card" asp-page="/Ventanas/Cliente/Biblioteca">
+            <div class="acceso-icon">📚</div>
+            <div>
+                <div class="acceso-titulo">Mi Biblioteca</div>
+                <div class="acceso-desc">Todos tus juegos, logros y guardados en un solo lugar.</div>
+            </div>
+        </a>
+        <a class="acceso-card" asp-page="/Ventanas/Cliente/Estadisticas">
+            <div class="acceso-icon">📊</div>
+            <div>
+                <div class="acceso-titulo">Mis Estadísticas</div>
+                <div class="acceso-desc">Tiempo de juego, FPS promedio y rendimiento general.</div>
+            </div>
+        </a>
+    </div>
+
+    <!-- JUEGOS RECIENTES -->
+    @if (Model.MisJuegos != null && Model.MisJuegos.Count > 0)
+    {
+        <div class="juegos-recientes">
+            <div class="seccion-titulo">🕹️ Mis juegos</div>
+            @foreach (var juego in Model.MisJuegos.Take(5))
+            {
+                <div class="juego-item">
+                    <div class="juego-info">
+                        <div class="juego-icon">🎮</div>
+                        <div>
+                            <div class="juego-titulo">@juego.Titulo</div>
+                            <div class="juego-genero">@juego.Genero • @juego.Desarrolladora</div>
+                        </div>
+                    </div>
+                    @if (juego.Completado)
+                    {
+                        <span class="juego-badge juego-badge-completado">✔ Completado</span>
+                    }
+                    else
+                    {
+                        <span class="juego-badge">En progreso</span>
+                    }
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div style="text-align:center; padding:40px; color:rgba(255,255,255,0.3);">
+            <div style="font-size:3rem; margin-bottom:15px;">🎮</div>
+            <p>No tenés juegos en tu biblioteca todavía.</p>
+        </div>
+    }
+</div>
