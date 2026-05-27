@@ -1,0 +1,164 @@
+﻿@page
+@model GestionJ_Razor.Pages.SoporteModel
+@{
+    ViewData["Title"] = "Soporte";
+    var rolId = HttpContext.Session.GetString("RolId");
+    var esModerador = rolId == "3";
+    var esAdmin = rolId == "1";
+    var puedeVerReportes = esAdmin || esModerador;
+}
+
+<style>
+    .soporte-container { max-width: 900px; margin: 0 auto; padding: 50px 20px; }
+    .page-hero { text-align: center; margin-bottom: 50px; }
+    .page-hero h1 { font-size: 2.5rem; font-weight: 900; color: white; margin-bottom: 10px; }
+    .page-hero h1 span { color: #c0392b; }
+    .page-hero p { color: rgba(255,255,255,0.5); font-size: 1.1rem; }
+    .reporte-form {
+        background: #12121f;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 16px;
+        padding: 35px;
+        margin-bottom: 40px;
+    }
+    .reporte-form h3 { font-size: 1.2rem; font-weight: 800; color: white; margin-bottom: 25px; }
+    .input-soporte {
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.15);
+        color: white;
+        border-radius: 8px;
+        padding: 12px 15px;
+        width: 100%;
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+    }
+    .input-soporte:focus { outline: none; border-color: #c0392b; }
+    .textarea-soporte {
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.15);
+        color: white;
+        border-radius: 8px;
+        padding: 12px 15px;
+        width: 100%;
+        font-size: 0.95rem;
+        height: 140px;
+        resize: vertical;
+        margin-bottom: 15px;
+    }
+    .textarea-soporte:focus { outline: none; border-color: #c0392b; }
+    .label-soporte { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 6px; display: block; }
+    .btn-enviar {
+        background: #c0392b; color: white; border: none;
+        border-radius: 8px; padding: 12px 30px;
+        font-weight: 700; font-size: 1rem; cursor: pointer;
+        transition: background 0.2s;
+    }
+    .btn-enviar:hover { background: #a93226; }
+    .msg-exito {
+        background: rgba(40,167,69,0.15);
+        border: 1px solid rgba(40,167,69,0.3);
+        border-radius: 10px; padding: 14px; margin-bottom: 20px;
+        color: #28a745; text-align: center;
+    }
+    .msg-error {
+        background: rgba(192,57,43,0.15);
+        border: 1px solid rgba(192,57,43,0.3);
+        border-radius: 10px; padding: 14px; margin-bottom: 20px;
+        color: #c0392b; text-align: center;
+    }
+    .reportes-panel {
+        background: #12121f;
+        border: 1px solid rgba(192,57,43,0.2);
+        border-radius: 16px;
+        padding: 30px;
+    }
+    .reportes-panel h3 { font-size: 1.2rem; font-weight: 800; color: white; margin-bottom: 25px; }
+    .reporte-item {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 10px;
+        padding: 18px 20px;
+        margin-bottom: 12px;
+    }
+    .reporte-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    .reporte-titulo { font-weight: 700; color: white; font-size: 0.95rem; }
+    .reporte-fecha { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+    .reporte-mensaje { font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+    .reporte-usuario {
+        font-size: 0.8rem;
+        color: #c0392b;
+        margin-top: 8px;
+        font-weight: 600;
+    }
+</style>
+
+<div class="soporte-container">
+    <div class="page-hero">
+        <h1>🛠️ Centro de <span>Soporte</span></h1>
+        <p>¿Tenés algún problema? Reportalo y te ayudamos</p>
+    </div>
+
+    <form method="POST">
+        @Html.AntiForgeryToken()
+
+        @if (!string.IsNullOrEmpty(Model.MensajeExito))
+        {
+            <div class="msg-exito">✅ @Model.MensajeExito</div>
+        }
+        @if (!string.IsNullOrEmpty(Model.MensajeError))
+        {
+            <div class="msg-error">❌ @Model.MensajeError</div>
+        }
+
+        @* FORMULARIO DE REPORTE - visible para todos los logueados *@
+        @if (HttpContext.Session.GetString("RolId") == "2" ||
+             HttpContext.Session.GetString("RolId") == "1" ||
+             HttpContext.Session.GetString("RolId") == "3")
+        {
+            <div class="reporte-form">
+                <h3>📝 Enviar reporte</h3>
+                <label class="label-soporte">Título del problema</label>
+                <input class="input-soporte" asp-for="Titulo" placeholder="Ej: Error al descargar emulador" />
+                <label class="label-soporte">Descripción detallada</label>
+                <textarea class="textarea-soporte" asp-for="Mensaje"
+                          placeholder="Describí el problema con el mayor detalle posible..."></textarea>
+                <button type="submit" asp-page-handler="BtEnviar" class="btn-enviar">
+                    📤 Enviar reporte
+                </button>
+            </div>
+        }
+
+        @* LISTA DE REPORTES - solo admin y moderador *@
+        @if (puedeVerReportes && Model.ListaReportes != null)
+        {
+            <div class="reportes-panel">
+                <h3>📋 Reportes recibidos (@Model.ListaReportes.Count)</h3>
+                @if (Model.ListaReportes.Count == 0)
+                {
+                    <p style="color:rgba(255,255,255,0.3); text-align:center; padding:30px 0;">
+                        No hay reportes aún.
+                    </p>
+                }
+                else
+                {
+                    @foreach (var reporte in Model.ListaReportes)
+                    {
+                        <div class="reporte-item">
+                            <div class="reporte-item-header">
+                                <span class="reporte-titulo">@reporte.Titulo</span>
+                                <span class="reporte-fecha">@reporte.Fecha</span>
+                            </div>
+                            <div class="reporte-mensaje">@reporte.Mensaje</div>
+                            <div class="reporte-usuario">👤 Usuario ID: @reporte.UsuarioId</div>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    </form>
+</div>

@@ -1,0 +1,341 @@
+﻿@page
+@model GestionJ_Razor.Pages.JuegosModel
+@{
+    ViewData["Title"] = "Juegos";
+    var esAdmin = HttpContext.Session.GetString("RolId") == "1";
+    var estaLogueado = !string.IsNullOrEmpty(HttpContext.Session.GetString("Usuario"));
+}
+
+<style>
+    .juegos-container { max-width: 1300px; margin: 0 auto; padding: 50px 20px; }
+    .page-hero { text-align: center; margin-bottom: 50px; }
+    .page-hero h1 { font-size: 2.5rem; font-weight: 900; color: white; margin-bottom: 10px; }
+    .page-hero h1 span { color: #c0392b; }
+    .page-hero p { color: rgba(255,255,255,0.5); font-size: 1.1rem; }
+    .aviso-login {
+        background: rgba(192,57,43,0.1);
+        border: 1px solid rgba(192,57,43,0.2);
+        border-radius: 12px;
+        padding: 20px 25px;
+        text-align: center;
+        margin-bottom: 40px;
+        color: rgba(255,255,255,0.7);
+    }
+    .aviso-login a { color: #c0392b; text-decoration: none; font-weight: 700; }
+    .admin-panel {
+        background: #12121f;
+        border: 1px solid rgba(192,57,43,0.3);
+        border-radius: 14px;
+        padding: 25px;
+        margin-bottom: 40px;
+    }
+    .admin-panel-titulo { font-size: 1rem; font-weight: 700; color: #c0392b; margin-bottom: 20px; }
+    .form-admin { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .input-admin {
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.15);
+        color: white;
+        border-radius: 8px;
+        padding: 10px 14px;
+        width: 100%;
+        font-size: 0.9rem;
+    }
+    .input-admin:focus { outline: none; border-color: #c0392b; }
+    .select-admin {
+        background: #1a1a2e;
+        border: 1px solid rgba(255,255,255,0.15);
+        color: white;
+        border-radius: 8px;
+        padding: 10px 14px;
+        width: 100%;
+        font-size: 0.9rem;
+    }
+    .label-admin { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 5px; display: block; }
+    .btn-admin-guardar {
+        background: #c0392b; color: white; border: none;
+        border-radius: 8px; padding: 10px 20px; font-weight: 700; cursor: pointer;
+    }
+    .btn-admin-cancelar {
+        background: transparent; color: rgba(255,255,255,0.5);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 8px; padding: 10px 20px; cursor: pointer;
+    }
+    .juegos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+    }
+    .juego-card {
+        background: #12121f;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.2s;
+    }
+    .juego-card:hover { border-color: rgba(192,57,43,0.4); transform: translateY(-3px); }
+    .juego-img-container {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, #1a0505, #0d0d1a);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+    }
+    .juego-img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .juego-img-fallback {
+        font-size: 4rem;
+        color: rgba(255,255,255,0.2);
+    }
+    .juego-body { padding: 18px 20px; }
+    .juego-titulo { font-size: 1.1rem; font-weight: 800; color: white; margin-bottom: 5px; }
+    .juego-genero { font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+    .juego-info-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .juego-dato { font-size: 0.82rem; color: rgba(255,255,255,0.5); }
+    .juego-dato span { color: white; font-weight: 600; }
+    .plataforma-tag {
+        display: inline-block;
+        background: rgba(192,57,43,0.15);
+        color: #c0392b;
+        border: 1px solid rgba(192,57,43,0.3);
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .juego-footer {
+        padding: 12px 18px;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        display: flex;
+        gap: 8px;
+    }
+    .btn-descargar {
+        background: #c0392b; color: white; border: none;
+        border-radius: 8px; padding: 9px 16px; font-weight: 700;
+        font-size: 0.85rem; text-decoration: none;
+        display: flex; align-items: center; gap: 6px;
+        transition: background 0.2s; flex: 1; justify-content: center;
+    }
+    .btn-descargar:hover { background: #a93226; color: white; }
+    .btn-descargar-disabled {
+        background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.3);
+        border: none; border-radius: 8px; padding: 9px 16px;
+        font-size: 0.85rem; flex: 1; text-align: center; cursor: not-allowed;
+    }
+    .btn-edit-sm {
+        background: rgba(255,193,7,0.15); color: #ffc107;
+        border: 1px solid rgba(255,193,7,0.3);
+        border-radius: 8px; padding: 7px 12px; font-size: 0.8rem; cursor: pointer;
+    }
+    .btn-del-sm {
+        background: rgba(192,57,43,0.15); color: #c0392b;
+        border: 1px solid rgba(192,57,43,0.3);
+        border-radius: 8px; padding: 7px 12px; font-size: 0.8rem; cursor: pointer;
+    }
+    .popup-overlay {
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.7);
+        display: flex; align-items: center; justify-content: center; z-index: 9999;
+    }
+    .popup-box {
+        background: #12121f; border: 1px solid rgba(192,57,43,0.4);
+        border-radius: 16px; padding: 35px; max-width: 400px; width: 90%;
+        text-align: center; color: white;
+    }
+    .popup-box h4 { margin-bottom: 10px; }
+    .popup-box p { color: rgba(255,255,255,0.5); margin-bottom: 25px; }
+    .popup-btns { display: flex; gap: 12px; justify-content: center; }
+    .badge-completado {
+        position: absolute; top: 10px; right: 10px;
+        background: rgba(40,167,69,0.85); color: white;
+        padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+    }
+</style>
+
+<div class="juegos-container">
+    <div class="page-hero">
+        <h1>🕹️ Catálogo de <span>Juegos</span></h1>
+        <p>Explorá y descargá ROMs de tus juegos retro favoritos</p>
+    </div>
+
+    <form method="POST">
+        @Html.AntiForgeryToken()
+
+        @if (!estaLogueado)
+        {
+            <div class="aviso-login">
+                ⚠️ Para descargar juegos necesitás
+                <a href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">iniciar sesión</a>
+                o <a asp-page="/Registro">crear una cuenta gratis</a>.
+            </div>
+        }
+
+        @* PANEL ADMIN *@
+        @if (esAdmin)
+        {
+            <div class="admin-panel">
+                <div class="admin-panel-titulo">⚙️ Panel de administración — Juegos</div>
+                @if (Model.Videojuego == null)
+                {
+                    <button type="submit" asp-page-handler="BtNuevo" class="btn-admin-guardar">
+                        + Agregar juego
+                    </button>
+                }
+                else
+                {
+                    <input type="hidden" asp-for="Videojuego.Id" />
+                    <div class="form-admin">
+                        <div>
+                            <label class="label-admin">Titulo</label>
+                            <input class="input-admin" asp-for="Videojuego.Titulo" />
+                        </div>
+                        <div>
+                            <label class="label-admin">Genero</label>
+                            <input class="input-admin" asp-for="Videojuego.Genero" />
+                        </div>
+                        <div>
+                            <label class="label-admin">Formato</label>
+                            <input class="input-admin" asp-for="Videojuego.Formato" />
+                        </div>
+                        <div>
+                            <label class="label-admin">Desarrolladora</label>
+                            <input class="input-admin" asp-for="Videojuego.Desarrolladora" />
+                        </div>
+                        <div>
+                            <label class="label-admin">Region</label>
+                            <input class="input-admin" asp-for="Videojuego.Region" />
+                        </div>
+                        <div>
+                            <label class="label-admin">Tamaño</label>
+                            <input class="input-admin" asp-for="Videojuego.Tamanio" />
+                        </div>
+                        <div>
+                            <label class="label-admin">Fecha Lanzamiento</label>
+                            <input type="date" class="input-admin" asp-for="Videojuego.FechaLanzamiento" />
+                        </div>
+                        <div>
+                            <label class="label-admin">Plataforma</label>
+                            <select class="select-admin" asp-for="Videojuego.PlataformaId">
+                                @if (Model.ListaPlataformas != null)
+                                {
+                                    @foreach (var p in Model.ListaPlataformas)
+                                    {
+                                        <option value="@p.Id">@p.NombrePlataforma</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div style="display:flex; align-items:flex-end; gap:8px;">
+                            <button type="submit" asp-page-handler="BtGuardar" class="btn-admin-guardar">Guardar</button>
+                            <button type="submit" asp-page-handler="BtCerrar" class="btn-admin-cancelar">Cancelar</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        @* POPUP BORRAR *@
+        @if (Model.Borrando && Model.Videojuego != null)
+        {
+            <div class="popup-overlay">
+                <div class="popup-box">
+                    <h4>¿Borrar juego?</h4>
+                    <p>@Model.Videojuego.Titulo será eliminado permanentemente.</p>
+                    <input type="hidden" asp-for="Videojuego.Id" />
+                    <div class="popup-btns">
+                        <button type="submit" asp-page-handler="BtCerrar" class="btn-admin-cancelar">Cancelar</button>
+                        <button type="submit" asp-page-handler="BtBorrar" class="btn-admin-guardar">Sí, borrar</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @* LISTA JUEGOS *@
+        @if (Model.ListaVideojuegos != null && Model.ListaVideojuegos.Count > 0)
+        {
+            <div class="juegos-grid">
+                @foreach (var juego in Model.ListaVideojuegos)
+                {
+                    var plataforma = Model.ListaPlataformas?.FirstOrDefault(p => p.Id == juego.PlataformaId);
+                    var rom = Model.ListaRoms?.FirstOrDefault(r => r.VideojuegoId == juego.Id);
+
+                    var nombreImg = juego.Titulo?.ToLower()
+                        .Replace(" ", "_")
+                        .Replace(":", "")
+                        .Replace("'", "") + ".png";
+
+                    var nombreArchivo = rom?.Nombre?.ToLower()
+                        .Replace(" ", "_")
+                        .Replace(".", "") + ".zip";
+
+                    <div class="juego-card">
+                        <div class="juego-img-container">
+                            <img src="~/img/juegos/@nombreImg"
+                                 alt="@juego.Titulo"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                            <div class="juego-img-fallback" style="display:none;">🎮</div>
+                            @if (juego.Completado)
+                            {
+                                <span class="badge-completado">✔ Completado</span>
+                            }
+                        </div>
+                        <div class="juego-body">
+                            @if (plataforma != null)
+                            {
+                                <span class="plataforma-tag">@plataforma.NombrePlataforma</span>
+                            }
+                            <div class="juego-titulo">@juego.Titulo</div>
+                            <div class="juego-genero">@juego.Genero</div>
+                            <div class="juego-info-row">
+                                <span class="juego-dato">Dev: <span>@juego.Desarrolladora</span></span>
+                                <span class="juego-dato">Región: <span>@juego.Region</span></span>
+                            </div>
+                            <div class="juego-info-row">
+                                <span class="juego-dato">Formato: <span>@juego.Formato</span></span>
+                                <span class="juego-dato">Tamaño: <span>@juego.Tamanio</span></span>
+                            </div>
+                        </div>
+                        <div class="juego-footer">
+                            @if (estaLogueado && rom != null)
+                            {
+                                <a class="btn-descargar"
+                                   href="~/descargas/roms/@nombreArchivo"
+                                   download>
+                                    ⬇️ Descargar ROM
+                                </a>
+                            }
+                            else if (!estaLogueado)
+                            {
+                                <div class="btn-descargar-disabled">🔒 Iniciá sesión</div>
+                            }
+                            else
+                            {
+                                <div class="btn-descargar-disabled">ROM no disponible</div>
+                            }
+                            @if (esAdmin)
+                            {
+                                <button type="submit" asp-page-handler="BtModificar"
+                                        asp-route-data="@juego.Id" class="btn-edit-sm">✏️</button>
+                                <button type="submit" asp-page-handler="BtBorrarVal"
+                                        asp-route-data="@juego.Id" class="btn-del-sm">🗑️</button>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div style="text-align:center; padding:60px; color:rgba(255,255,255,0.3);">
+                <div style="font-size:3rem; margin-bottom:15px;">🕹️</div>
+                <p>No hay juegos disponibles por ahora.</p>
+            </div>
+        }
+    </form>
+</div>

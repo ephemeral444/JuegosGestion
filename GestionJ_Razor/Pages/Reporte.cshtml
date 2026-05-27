@@ -1,0 +1,29 @@
+﻿@page
+@model GestionJ_Razor.Pages.ReporteModel
+@{
+    ViewData["Title"] = "Reporte";
+}
+
+<div style="max-width:600px; margin:80px auto; text-align:center; padding:20px;">
+    <div style="font-size:4rem; margin-bottom:20px;">📄</div>
+    <h2 style="color:white; font-weight:900; margin-bottom:10px;">Descargar Reporte</h2>
+    <p style="color:rgba(255,255,255,0.5); margin-bottom:35px;">
+        @if (HttpContext.Session.GetString("RolId") == "1")
+        {
+            <span>Como administrador, recibirás un reporte completo de toda la plataforma.</span>
+        }
+        else
+        {
+            <span>Recibirás un reporte con tus juegos, logros, estadísticas y sesiones de juego.</span>
+        }
+    </p>
+    <form method="POST">
+        @Html.AntiForgeryToken()
+        <button type="submit"
+                asp-page-handler="Descargar"
+                style="background:#c0392b; color:white; border:none; border-radius:10px;
+            padding:15px 40px; font-size:1.1rem; font-weight:700; cursor:pointer;">
+            ⬇️ Descargar PDF
+        </button>
+    </form>
+</div>
