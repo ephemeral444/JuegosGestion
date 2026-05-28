@@ -23,7 +23,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Videojuegos";
             auditoria.Operacion = "Consultar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se consultaron todos los videojuegos";
+            auditoria.Descripcion = "El administrador consulto todos los videojuegos";
             iConexion.Auditorias!.Add(auditoria);
             iConexion.SaveChanges();
 
@@ -44,7 +44,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Videojuegos";
             auditoria.Operacion = "Guardar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se guardó un videojuego";
+            auditoria.Descripcion = "El administrador guardó un videojuego";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();
@@ -65,7 +65,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Videojuegos";
             auditoria.Operacion = "Modificar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se modificó un videojuego";
+            auditoria.Descripcion = "El administrador modificó un videojuego";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();
@@ -86,7 +86,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Videojuegos";
             auditoria.Operacion = "Eliminar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se eliminó un videojuego";
+            auditoria.Descripcion = "El administrador eliminó un videojuego";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();

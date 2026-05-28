@@ -23,7 +23,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Emuladores";
             auditoria.Operacion = "Consultar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se consultaron todos los emuladores";
+            auditoria.Descripcion = "El administrador consulto todos los emuladores";
             iConexion.Auditorias!.Add(auditoria);
             iConexion.SaveChanges();
 
@@ -44,7 +44,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Emuladores";
             auditoria.Operacion = "Guardar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se guardó un emulador";
+            auditoria.Descripcion = "El administrador guardó un emulador";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();
@@ -65,7 +65,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Emuladores";
             auditoria.Operacion = "Modificar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se modificó un emulador";
+            auditoria.Descripcion = "El administrador modificó un emulador";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();
@@ -86,7 +86,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Emuladores";
             auditoria.Operacion = "Eliminar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se eliminó un emulador";
+            auditoria.Descripcion = "El administrador eliminó un emulador";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();

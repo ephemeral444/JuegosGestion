@@ -23,7 +23,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "BibliotecaUsuarios";
             auditoria.Operacion = "Consultar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se consultaron todas las bibliotecas de usuarios";
+            auditoria.Descripcion = "El administrador consulto todas las bibliotecas de usuarios";
             iConexion.Auditorias!.Add(auditoria);
             iConexion.SaveChanges();
 
@@ -44,7 +44,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "BibliotecaUsuarios";
             auditoria.Operacion = "Guardar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se guardó una biblioteca de usuario";
+            auditoria.Descripcion = "El administrador guardó una biblioteca de usuario";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();
@@ -65,7 +65,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "BibliotecaUsuarios";
             auditoria.Operacion = "Modificar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se modificó una biblioteca de usuario";
+            auditoria.Descripcion = "El administrador modificó una biblioteca de usuario";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();
@@ -86,7 +86,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "BibliotecaUsuarios";
             auditoria.Operacion = "Eliminar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se eliminó una biblioteca de usuario";
+            auditoria.Descripcion = "El administrador eliminó una biblioteca de usuario";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();

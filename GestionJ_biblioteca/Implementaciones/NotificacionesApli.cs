@@ -23,7 +23,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Notificaciones";
             auditoria.Operacion = "Consultar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se consultaron todas las notificaciones";
+            auditoria.Descripcion = "El administrador consulto todas las notificaciones";
             iConexion.Auditorias!.Add(auditoria);
             iConexion.SaveChanges();
 
@@ -44,7 +44,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Notificaciones";
             auditoria.Operacion = "Guardar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se guardó una notificacion";
+            auditoria.Descripcion = "El administrador guardó una notificacion";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();
@@ -65,7 +65,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Notificaciones";
             auditoria.Operacion = "Modificar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se modificó una notificacion";
+            auditoria.Descripcion = "El administrador modificó una notificacion";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();
@@ -86,7 +86,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Notificaciones";
             auditoria.Operacion = "Eliminar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se eliminó una notificacion";
+            auditoria.Descripcion = "El administrador eliminó una notificacion";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();

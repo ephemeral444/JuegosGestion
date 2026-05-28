@@ -23,7 +23,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Logros";
             auditoria.Operacion = "Consultar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se consultaron todos los logros";
+            auditoria.Descripcion = "El administrador consulto todos los logros";
             iConexion.Auditorias!.Add(auditoria);
             iConexion.SaveChanges();
 
@@ -54,7 +54,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Logros";
             auditoria.Operacion = "Guardar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se guardó un logro";
+            auditoria.Descripcion = "El administrador guardó un logro";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();
@@ -85,7 +85,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Logros";
             auditoria.Operacion = "Modificar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se modificó un logro";
+            auditoria.Descripcion = "El administrador modificó un logro";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();
@@ -106,7 +106,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Logros";
             auditoria.Operacion = "Eliminar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se eliminó un logro";
+            auditoria.Descripcion = "El administrador eliminó un logro";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();

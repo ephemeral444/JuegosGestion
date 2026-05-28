@@ -23,7 +23,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Descargas";
             auditoria.Operacion = "Consultar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se consultaron todas las descargas";
+            auditoria.Descripcion = "El administrador consulto todas las descargas";
             iConexion.Auditorias!.Add(auditoria);
             iConexion.SaveChanges();
 
@@ -51,7 +51,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Descargas";
             auditoria.Operacion = "Guardar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se guardó una descarga";
+            auditoria.Descripcion = "El administrador guardó una descarga";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();
@@ -72,7 +72,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Descargas";
             auditoria.Operacion = "Modificar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se modificó una descarga";
+            auditoria.Descripcion = "El administrador modificó una descarga";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();
@@ -93,7 +93,7 @@ namespace GestionJ_biblioteca.Implementaciones
             auditoria.NombreTabla = "Descargas";
             auditoria.Operacion = "Eliminar";
             auditoria.Fecha = DateTime.Now;
-            auditoria.Descripcion = "Se eliminó una descarga";
+            auditoria.Descripcion = "El administrador eliminó una descarga";
             iConexion.Auditorias!.Add(auditoria);
 
             iConexion.SaveChanges();
