@@ -83,14 +83,21 @@ namespace GestionJ_Razor.Pages
             try
             {
                 if (Videojuego == null) return;
-                int.TryParse(HttpContext.Session.GetString("UsuarioId"), out int uid);
                 if (Videojuego.Id == 0)
                 {
+                    int.TryParse(HttpContext.Session.GetString("UsuarioId"), out int uid);
                     Videojuego.UsuarioId = uid;
                     Videojuego = iVideojuegos!.Guardar(Videojuego);
                 }
                 else
+                {
+                    // Recuperar UsuarioId original para no perderlo
+                    var original = iVideojuegos!.Consultar()
+                        .FirstOrDefault(v => v.Id == Videojuego.Id);
+                    if (original != null)
+                        Videojuego.UsuarioId = original.UsuarioId;
                     Videojuego = iVideojuegos!.Modificar(Videojuego);
+                }
                 OnPostBtRefrescar();
             }
             catch { }
